@@ -40,7 +40,7 @@ export class AddRashiHoro extends Component {
   };
 
   onEditorStateChange = (editorState) => {
-    console.log('editorState',editorState)
+    console.log("editorState", editorState);
     this.setState({
       editorState,
     });
@@ -71,8 +71,8 @@ export class AddRashiHoro extends Component {
   };
 
   handleInputChange = (e) => {
-    console.log('event',e.target.value)
-  }
+    console.log("event", e.target.value);
+  };
 
   render() {
     const { editorState } = this.state;
@@ -132,7 +132,6 @@ export class AddRashiHoro extends Component {
                 </Col>
                 <Col lg="12" md="12" sm="12" className="mb-2">
                   <Label>Short Description</Label>
-          
                   <Editor
                     editorState={editorState}
                     wrapperClassName="demo-wrapper"
@@ -151,7 +150,7 @@ export class AddRashiHoro extends Component {
                 <Col lg="12" md="12" sm="12" className="mb-2">
                   <Label>Long Description</Label>
                   <Editor
-                  name="long_desc"
+                    name="long_desc"
                     editorState={editorState}
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
