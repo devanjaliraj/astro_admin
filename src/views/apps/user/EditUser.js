@@ -8,34 +8,26 @@ import {
   Input,
   Label,
   Button,
-  FormGroup,
 } from "reactstrap";
-//import axios from "axios";
 import axiosConfig from "../../../axiosConfig";
-// import { useParams } from "react-router-dom";
-//import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 import swal from "sweetalert";
-
-import { data } from "jquery";
 export class EditUser extends Component {
-  
-    constructor(props) {
-      super(props);
-      this.state = {
-    fullname: "",
-    email: "",
-    mobile: "",
-    password: "",
-    cnfmPassword: "",
-    userimg:"",
-    selectedName: "",
-    selectedFile: null,
-  };
-
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      fullname: "",
+      email: "",
+      mobile: "",
+      password: "",
+      cnfmPassword: "",
+      userimg: "",
+      selectedName: "",
+      selectedFile: null,
+    };
+  }
 
   onChangeHandler = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
@@ -54,11 +46,7 @@ export class EditUser extends Component {
           fullname: response.data.data.fullname,
           email: response.data.data.email,
           mobile: response.data.data.mobile,
-
-          password: response.data.data.password,
-          cnfmPassword: response.data.cnfmPassword,
-          userimg: response.data. userimg,
-      
+          userimg: response.data.userimg,
         });
       })
       .catch((error) => {
@@ -77,29 +65,23 @@ export class EditUser extends Component {
     e.preventDefault();
     console.log(this.state);
     const data = new FormData();
- 
+
     data.append("fullname", this.state.fullname);
     data.append("email", this.state.email);
-    data.append("password", this.state.password);
-    data.append("cnfmPassword", this.state.cnfmPassword);
     data.append("status", this.state.status);
     if (this.state.selectedFile !== null) {
-      data.append(
-        "userimg",
-        this.state.selectedFile,
-        this.state.selectedName
-      );
+      data.append("userimg", this.state.selectedFile, this.state.selectedName);
     }
 
     for (var value of data.values()) {
-       console.log(value);
+      console.log(value);
     }
     for (var key of data.keys()) {
-       console.log(key);
+      console.log(key);
     }
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/user/myprofile/${id}`,data )
+      .post(`/user/myprofile/${id}`, data)
       .then((response) => {
         console.log(response.data);
         swal("Success!", "Submitted SuccessFull!", "success");
@@ -113,10 +95,10 @@ export class EditUser extends Component {
     return (
       <div>
         <Breadcrumbs
-            breadCrumbTitle="User"
-            breadCrumbParent="Home"
-            breadCrumbActive="Edit Users "
-          />
+          breadCrumbTitle="User"
+          breadCrumbParent="Home"
+          breadCrumbActive="Edit Users "
+        />
         <Card>
           <Row className="m-2">
             <Col>
@@ -125,19 +107,20 @@ export class EditUser extends Component {
               </h1>
             </Col>
             <Col>
-            <Route render={({ history}) => (
-              <Button
-                className=" btn btn-danger float-right"
-                onClick={() => history.push("/app/user/userList")}
-              >
-                Back
-                </Button>
+              <Route
+                render={({ history }) => (
+                  <Button
+                    className=" btn btn-danger float-right"
+                    onClick={() => history.push("/app/user/userList")}
+                  >
+                    Back
+                  </Button>
                 )}
               />
-              </Col>
+            </Col>
           </Row>
           <CardBody>
-          <Form className="m-1" onSubmit={this.submitHandler}>
+            <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Name</Label>
@@ -147,8 +130,8 @@ export class EditUser extends Component {
                     name="fullname"
                     placeholder="Enter First Name"
                     value={this.state.fullname}
-                    onChange={this.changeHandler}>
-                  </Input>
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Email</Label>
@@ -158,10 +141,9 @@ export class EditUser extends Component {
                     name="email"
                     placeholder="Enter Last Name"
                     value={this.state.email}
-                    onChange={this.changeHandler}>
-                  </Input>
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
-               
 
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Mobile No.</Label>
@@ -171,8 +153,8 @@ export class EditUser extends Component {
                     name="mobile"
                     placeholder="Mobile No."
                     value={this.state.mobile}
-                    onChange={this.changeHandler}>
-                  </Input>
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
                 {/* <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>DOB</Label>
@@ -196,8 +178,8 @@ export class EditUser extends Component {
                       onChange={this.changeHandler}>
                     </Input>
                 </Col> */}
-              {/* </Row>
-              <Row> */}
+                {/* </Row>
+              <Row>
               <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Password </Label>
                     <Input
@@ -219,38 +201,38 @@ export class EditUser extends Component {
                       value={this.state.cnfmPassword}
                       onChange={this.changeHandler}>
                     </Input>
-                </Col>
+                </Col> */}
+              </Row>
+              <Col lg="6" md="6" sm="6" className="mb-2">
+                <Label className="mb-1">Status</Label>
+                <div
+                  className="form-label-group"
+                  onChange={(e) => this.changeHandler1(e)}
+                >
+                  <input
+                    style={{ marginRight: "3px" }}
+                    type="radio"
+                    name="status"
+                    value="Active"
+                  />
+                  <span style={{ marginRight: "20px" }}>Active</span>
 
-            </Row>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label className="mb-1">Status</Label>
-                  <div
-                    className="form-label-group"
-                    onChange={(e) => this.changeHandler1(e)}
-                  >
-                    <input
-                      style={{ marginRight: "3px" }}
-                      type="radio"
-                      name="status"
-                      value="Active"
-                    />
-                    <span style={{ marginRight: "20px" }}>Active</span>
-
-                    <input
-                      style={{ marginRight: "3px" }}
-                      type="radio"
-                      name="status"
-                      value="Inactive"
-                    />
-                    <span style={{ marginRight: "3px" }}>Inactive</span>
-                  </div>
-                </Col>
+                  <input
+                    style={{ marginRight: "3px" }}
+                    type="radio"
+                    name="status"
+                    value="Inactive"
+                  />
+                  <span style={{ marginRight: "3px" }}>Inactive</span>
+                </div>
+              </Col>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Button.Ripple
                     color="primary"
                     type="submit"
-                    className="mr-1 mb-1">
+                    className="mr-1 mb-1"
+                  >
                     Update Users
                   </Button.Ripple>
                 </Col>

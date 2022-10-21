@@ -63,12 +63,21 @@ class CategoryList extends React.Component {
       {
         headerName: "Image",
         field: "img",
-        filter: true,
-        width: 150,
+        filter: false,
+        width: 200,
+        setColumnVisible: false,
         cellRendererFramework: (params) => {
           return (
-            <div>
-              <span>{params.data.img}</span>
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.img.map((i) => (
+                <img
+                  className=" rounded-circle  mr-3"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
             </div>
           );
         },
@@ -158,7 +167,7 @@ class CategoryList extends React.Component {
   async componentDidMount() {
     // let { id } = this.props.match.params;
 
-    await axiosConfig.get(`admin/getproductcalegory`).then((response) => {
+    await axiosConfig.get(`/admin/getproductcalegory`).then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
@@ -225,7 +234,7 @@ class CategoryList extends React.Component {
                         <Button
                           className=" btn btn-success float-right"
                           onClick={() =>
-                            history.push("/app/productmanager/addcategory")
+                            history.push("/app/productmanager/addCategory")
                           }
                         >
                           Add

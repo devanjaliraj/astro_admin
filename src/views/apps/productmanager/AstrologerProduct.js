@@ -185,16 +185,6 @@ class AstrologerProduct extends React.Component {
     ],
   };
   async componentDidMount() {
-    let { id } = this.props.match.params;
-
-    await axios
-      .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
-
     await axios
       .get("http://3.108.185.7:4000/admin/allcustomer")
       .then((response) => {

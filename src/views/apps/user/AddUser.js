@@ -1,32 +1,29 @@
 import React, { Component } from "react";
 import {
   Card,
-
   CardBody,
   Row,
   Col,
   Form,
   Label,
   Input,
-
   Button,
 } from "reactstrap";
-import  axios from "axios";
+import axios from "axios";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-
 
 export default class AddCustomer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        first_name: "",
-        last_name: "",
-        customer_email: "",
-        mobile_no: "",
-
-        selectedFile: null,
-        status: ""
+      first_name: "",
+      last_name: "",
+      customer_email: "",
+      mobile_no: "",
+      selectedFile: undefined,
+      selectedName: "",
+      status: "",
     };
   }
 
@@ -44,11 +41,11 @@ export default class AddCustomer extends Component {
   submitHandler = (e) => {
     e.preventDefault();
 
-
-    axios.post("http://3.108.185.7:4000/api/user/customersignup", this.state)
+    axios
+      .post("http://3.108.185.7:4000/api/user/customersignup", this.state)
       .then((response) => {
         console.log(response);
-        alert("Customer Added Successful")
+        alert("Customer Added Successful");
         this.props.history.push("/app/customer/customerList");
       })
       .catch((error) => {
@@ -59,31 +56,32 @@ export default class AddCustomer extends Component {
   render() {
     return (
       <div>
-         <Breadcrumbs
-            breadCrumbTitle="Customer"
-            breadCrumbParent="Home"
-            breadCrumbActive="Add Customer "
-          />
+        <Breadcrumbs
+          breadCrumbTitle="Customer"
+          breadCrumbParent="Home"
+          breadCrumbActive="Add Customer "
+        />
         <Card>
-
           <Row className="m-2">
-                <Col>
-                  <h1 sm="6" className="float-left">
-                  Add User
-                  </h1>
-                </Col>
-
+            <Col>
+              <h1 sm="6" className="float-left">
+                Add User
+              </h1>
+            </Col>
 
             <Col>
-        <Route render={({ history}) => (
-              <Button
-                className=" btn btn-danger float-right"
-                onClick={() => history.push("/app/userride/userRideList")}
-              >                 Back
-                 </Button>
+              <Route
+                render={({ history }) => (
+                  <Button
+                    className=" btn btn-danger float-right"
+                    onClick={() => history.push("/app/userride/userRideList")}
+                  >
+                    {" "}
+                    Back
+                  </Button>
                 )}
               />
-              </Col>
+            </Col>
           </Row>
           <CardBody>
             <Form className="m-1" onSubmit={this.submitHandler}>
@@ -96,8 +94,8 @@ export default class AddCustomer extends Component {
                     name="first_name"
                     placeholder="Enter First Name"
                     value={this.state.first_name}
-                    onChange={this.changeHandler}>
-                  </Input>
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Last Name</Label>
@@ -107,8 +105,8 @@ export default class AddCustomer extends Component {
                     name="last_name"
                     placeholder="Enter Last Name"
                     value={this.state.last_name}
-                    onChange={this.changeHandler}>
-                  </Input>
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label> Email</Label>
@@ -118,8 +116,8 @@ export default class AddCustomer extends Component {
                     name="customer_email"
                     placeholder="Email"
                     value={this.state.customer_email}
-                    onChange={this.changeHandler} >
-                  </Input>
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
 
                 <Col lg="6" md="6" sm="6" className="mb-2">
@@ -130,86 +128,86 @@ export default class AddCustomer extends Component {
                     name="mobile_no"
                     placeholder="Mobile No."
                     value={this.state.mobile_no}
-                    onChange={this.changeHandler}>
-                  </Input>
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>DOB</Label>
-                    <Input
-                      required
-                      type="date"
-                      name="sortorder"
-                      placeholder="Enter Confirm  Password"
-                      value={this.state.sortorder}
-                      onChange={this.changeHandler}>
-                    </Input>
+                  <Input
+                    required
+                    type="date"
+                    name="sortorder"
+                    placeholder="Enter Confirm  Password"
+                    value={this.state.sortorder}
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Date Of Register</Label>
-                    <Input
-                      required
-                      type="date"
-                      name="sortorder"
-                      placeholder="Enter Confirm  Password"
-                      value={this.state.sortorder}
-                      onChange={this.changeHandler}>
-                    </Input>
+                  <Input
+                    required
+                    type="date"
+                    name="sortorder"
+                    placeholder="Enter Confirm  Password"
+                    value={this.state.sortorder}
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
               </Row>
               <Row>
-              <Col lg="6" md="6" sm="6" className="mb-2">
+                <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Password </Label>
-                    <Input
-                      required
-                      type="text"
-                      name="sortorder"
-                      placeholder="Enter Password"
-                      value={this.state.sortorder}
-                      onChange={this.changeHandler}>
-                    </Input>
+                  <Input
+                    required
+                    type="text"
+                    name="sortorder"
+                    placeholder="Enter Password"
+                    value={this.state.sortorder}
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Confirm Password </Label>
-                    <Input
-                      required
-                      type="text"
-                      name="sortorder"
-                      placeholder="Enter Confirm  Password"
-                      value={this.state.sortorder}
-                      onChange={this.changeHandler}>
-                    </Input>
+                  <Input
+                    required
+                    type="text"
+                    name="sortorder"
+                    placeholder="Enter Confirm  Password"
+                    value={this.state.sortorder}
+                    onChange={this.changeHandler}
+                  ></Input>
                 </Col>
+              </Row>
+              <Col lg="6" md="6" sm="6" className="mb-2">
+                <Label className="mb-1">Status</Label>
+                <div
+                  className="form-label-group"
+                  onChange={(e) => this.changeHandler1(e)}
+                >
+                  <input
+                    style={{ marginRight: "3px" }}
+                    type="radio"
+                    name="status"
+                    value="Active"
+                  />
+                  <span style={{ marginRight: "20px" }}>Active</span>
 
-            </Row>
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label className="mb-1">Status</Label>
-                  <div
-                    className="form-label-group"
-                    onChange={(e) => this.changeHandler1(e)}
-                  >
-                    <input
-                      style={{ marginRight: "3px" }}
-                      type="radio"
-                      name="status"
-                      value="Active"
-                    />
-                    <span style={{ marginRight: "20px" }}>Active</span>
-
-                    <input
-                      style={{ marginRight: "3px" }}
-                      type="radio"
-                      name="status"
-                      value="Inactive"
-                    />
-                    <span style={{ marginRight: "3px" }}>Inactive</span>
-                  </div>
-                </Col>
+                  <input
+                    style={{ marginRight: "3px" }}
+                    type="radio"
+                    name="status"
+                    value="Inactive"
+                  />
+                  <span style={{ marginRight: "3px" }}>Inactive</span>
+                </div>
+              </Col>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Button.Ripple
                     color="primary"
                     type="submit"
-                    className="mr-1 mb-1">
+                    className="mr-1 mb-1"
+                  >
                     Add User
                   </Button.Ripple>
                 </Col>

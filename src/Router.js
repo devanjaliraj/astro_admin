@@ -118,8 +118,9 @@ const HoroscopeCategory = lazy(() =>
 );
 const AddHoroscope = lazy(() => import("./views/apps/horoscope/AddHoroscope"));
 
-const HoroscopeEdit = lazy(() => import("./views/apps/horoscope/HoroscopeEdit"));
-
+const HoroscopeEdit = lazy(() =>
+  import("./views/apps/horoscope/HoroscopeEdit")
+);
 
 const UserChatList = lazy(() => import("./views/apps/chat/UserChatList"));
 
@@ -215,23 +216,40 @@ const AddBlog = lazy(() => import("./views/apps/blogmngment/AddBlog"));
 const EditBlog = lazy(() => import("./views/apps/blogmngment/EditBlog"));
 const ViewBlog = lazy(() => import("./views/apps/blogmngment/ViewBlog"));
 
-
 // rashihoroscope
-const RashiHorocopeList = lazy(() => import("./views/apps/rashihoroscope/RashiHoroscopeList"));
-const AddRashiHoro = lazy(() => import("./views/apps/rashihoroscope/AddRashiHoro"));
-const EditRashiHoro = lazy(() => import("./views/apps/rashihoroscope/EditRashiHoro"));
-const ViewRashiHoro = lazy(() => import("./views/apps/rashihoroscope/ViewRashiHoro"));
+const RashiHorocopeList = lazy(() =>
+  import("./views/apps/rashihoroscope/RashiHoroscopeList")
+);
+const AddRashiHoro = lazy(() =>
+  import("./views/apps/rashihoroscope/AddRashiHoro")
+);
+const EditRashiHoro = lazy(() =>
+  import("./views/apps/rashihoroscope/EditRashiHoro")
+);
+const ViewRashiHoro = lazy(() =>
+  import("./views/apps/rashihoroscope/ViewRashiHoro")
+);
 
 // Categoryhoroscope
-const CateHoroscopeList = lazy(() => import("./views/apps/categoryhoroscope/CateHoroscopeList"));
-const AddCateHoro = lazy(() => import("./views/apps/categoryhoroscope/AddCateHoro"));
-const EditCateHoro = lazy(() => import("./views/apps/categoryhoroscope/EditCateHoro"));
-const ViewCateHoro = lazy(() => import("./views/apps/categoryhoroscope/VIewCateHoro"));
-const RashiList = lazy(() => import("./views/apps/categoryhoroscope/RashiList"));
+const CateHoroscopeList = lazy(() =>
+  import("./views/apps/categoryhoroscope/CateHoroscopeList")
+);
+const AddCateHoro = lazy(() =>
+  import("./views/apps/categoryhoroscope/AddCateHoro")
+);
+const EditCateHoro = lazy(() =>
+  import("./views/apps/categoryhoroscope/EditCateHoro")
+);
+const ViewCateHoro = lazy(() =>
+  import("./views/apps/categoryhoroscope/VIewCateHoro")
+);
+const RashiList = lazy(() =>
+  import("./views/apps/categoryhoroscope/RashiList")
+);
 const AddRashi = lazy(() => import("./views/apps/categoryhoroscope/AddRashi"));
-const EditRashi = lazy(() => import("./views/apps/categoryhoroscope/EditRashi"));
-
-
+const EditRashi = lazy(() =>
+  import("./views/apps/categoryhoroscope/EditRashi")
+);
 
 // setting
 const addBank = lazy(() => import("./views/apps/setting/bank/AddBank"));
@@ -759,48 +777,52 @@ class AppRouter extends React.Component {
             <AppRoute path="/app/blogmngment/addBlog" component={AddBlog} />
             <AppRoute path="/app/blogmngment/editBlog" component={EditBlog} />
             <AppRoute path="/app/blogmngment/viewBlog" component={ViewBlog} />
-
             {/* rashihoroscope  */}
-
-            <AppRoute path="/app/rashihoroscope/rashihoroscopelist"
-               component={RashiHorocopeList}
+            <AppRoute
+              path="/app/rashihoroscope/rashihoroscopelist"
+              component={RashiHorocopeList}
             />
-            <AppRoute path="/app/rashihoroscope/addrashihoro"
-               component={AddRashiHoro}
+            <AppRoute
+              path="/app/rashihoroscope/addrashihoro"
+              component={AddRashiHoro}
             />
-            <AppRoute path="/app/rashihoroscope/editrashihoro"
-               component={EditRashiHoro}
+            <AppRoute
+              path="/app/rashihoroscope/editrashihoro"
+              component={EditRashiHoro}
             />
-            <AppRoute path="/app/rashihoroscope/viewrashihoro"
-               component={ViewRashiHoro}
+            <AppRoute
+              path="/app/rashihoroscope/viewrashihoro"
+              component={ViewRashiHoro}
             />
-
-           {/* CAtegory Horoscope  */}
-
-            <AppRoute path="/app/categoryhoroscope/catehoroscopelist"
-               component={CateHoroscopeList}
+            {/* CAtegory Horoscope  */}
+            <AppRoute
+              path="/app/categoryhoroscope/catehoroscopelist"
+              component={CateHoroscopeList}
             />
-            <AppRoute path="/app/categoryhoroscope/addcatehoro"
-               component={AddCateHoro}
+            <AppRoute
+              path="/app/categoryhoroscope/addcatehoro"
+              component={AddCateHoro}
             />
-            <AppRoute path="/app/categoryhoroscope/editcatehoro"
-               component={EditCateHoro}
+            <AppRoute
+              path="/app/categoryhoroscope/editcatehoro"
+              component={EditCateHoro}
             />
-
-            <AppRoute path="/app/categoryhoroscope/viewcatehoro"
-               component={ViewCateHoro}
+            <AppRoute
+              path="/app/categoryhoroscope/viewcatehoro"
+              component={ViewCateHoro}
             />
-
-            <AppRoute path="/app/categoryhoroscope/rashilist"
-               component={RashiList}
+            <AppRoute
+              path="/app/categoryhoroscope/rashilist"
+              component={RashiList}
             />
-           <AppRoute path="/app/categoryhoroscope/addrashi"
-               component={AddRashi}
+            <AppRoute
+              path="/app/categoryhoroscope/addrashi"
+              component={AddRashi}
             />
-            <AppRoute path="/app/categoryhoroscope/editrashi/:id"
-               component={EditRashi}
+            <AppRoute
+              path="/app/categoryhoroscope/editrashi/:id"
+              component={EditRashi}
             />
-
             {/* report */}
             <AppRoute
               path="/app/report/rechargeReport"

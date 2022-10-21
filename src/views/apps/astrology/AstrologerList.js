@@ -11,7 +11,7 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-// import axiosConfig from "../../../axiosConfig";
+import axiosConfig from "../../../axiosConfig";
 import axios from "axios";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
@@ -254,18 +254,16 @@ class AstrologerList extends React.Component {
     //     this.setState({ rowData });
     //   });
 
-    await axios
-      .get("http://13.235.180.192:8000/admin/allAstro")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get("/admin/allAstro").then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axios.get(`http:// 13.235.180.192:8000/user/dltAstro/${id}`).then(
+    await axiosConfig.get(`/admin/dltAstro/${id}`).then(
       (response) => {
         console.log(response);
       },

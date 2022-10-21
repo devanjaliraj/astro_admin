@@ -178,15 +178,6 @@ class UserList extends React.Component {
     ],
   };
   async componentDidMount() {
-    // let { id } = this.props.match.params;
-
-    //  await axios.get(`http://13.235.180.192:8000/user/viewoneuser/${id}`)
-    //     .then((response) => {
-    //   let rowData = response.data.data;
-    //   console.log(rowData);
-    //   this.setState({ rowData });
-    //  });
-
     await axiosConfig.get(`/admin/alluser`).then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
@@ -248,7 +239,7 @@ class UserList extends React.Component {
                       Users List
                     </h1>
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <Route
                       render={({ history }) => (
                         <Button
@@ -259,7 +250,7 @@ class UserList extends React.Component {
                         </Button>
                       )}
                     />
-                  </Col>
+                  </Col> */}
                 </Row>
                 <CardBody>
                   {this.state.rowData === null ? null : (

@@ -8,20 +8,15 @@ import {
   Input,
   Label,
   Button,
-  FormGroup,
+  CustomInput,
 } from "reactstrap";
-//import axios from "axios";
 import axiosConfig from "../../../axiosConfig";
-// import { useParams } from "react-router-dom";
-//import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-import { data } from "jquery";
 export class AddCategory extends Component {
   state = {
-    // activeTab: "1",
     astroId: "",
     name: "",
     img: "",
@@ -30,12 +25,6 @@ export class AddCategory extends Component {
     selectedFile: undefined,
     selectedName: "",
   };
-
-  // toggle = (tab) => {
-  //   this.setState({
-  //     activeTab: tab,
-  //   });
-  // };
 
   onChangeHandler = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
@@ -53,20 +42,6 @@ export class AddCategory extends Component {
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  componentDidMount() {
-    console.log(this.props.match.params);
-    let { id } = this.props.match.params;
-    axiosConfig.get(`/getonecustomer/${id}`).then((response) => {
-      console.log(response);
-      this.setState({
-        astroId: response.data.data.astroId,
-        name: response.data.data.name,
-        img: response.data.data.img,
-        desc: response.data.data.desc,
-        status: response.data.data.status,
-      });
-    });
-  }
 
   submitHandler = (e) => {
     e.preventDefault();
@@ -87,13 +62,14 @@ export class AddCategory extends Component {
     for (var key of data.keys()) {
       console.log(key);
     }
+    // console.log(this.props.match.params, this.state);
 
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`//${id}`, data)
+      .post(`/admin/addProductcategory`, data)
       .then((response) => {
         console.log(response);
-        this.props.history.push("/app/customer/customerList");
+        this.props.history.push("/app/productmanager/categorylist");
       })
       .catch((error) => {
         console.log(error);
@@ -119,7 +95,9 @@ export class AddCategory extends Component {
                 render={({ history }) => (
                   <Button
                     className=" btn btn-danger float-right"
-                    onClick={() => history.push("/app/customer/customerList")}
+                    onClick={() =>
+                      history.push("/app/productmanager/categorylist")
+                    }
                   >
                     Back
                   </Button>
@@ -135,34 +113,32 @@ export class AddCategory extends Component {
                   <Input
                     required
                     type="text"
-                    name="title"
+                    name="name"
                     placeholder="Enter Category Name"
-                    // value={this.state.title}
-                    // onChange={this.changeHandler}
+                    value={this.state.name}
+                    onChange={this.changeHandler}
                   ></Input>
                 </Col>
                 <Col lg="4" md="4" sm="4" className="mb-2">
-                  <Label>slug Name</Label>
+                  <Label>Description</Label>
                   <Input
                     required
                     type="text"
-                    name="mrp"
+                    name="desc"
                     placeholder="slug  Name"
-                    // value={this.state.mrp}
-                    // onChange={this.changeHandler}
+                    value={this.state.desc}
+                    onChange={this.changeHandler}
                   ></Input>
                 </Col>
                 <Col lg="4" md="4" sm="4" className="mb-2">
-                  <Label>Thumnail image1</Label>
-                  <Input
-                    required
+                  <Label>Thumnail image</Label>
+
+                  <Label>Image</Label>
+                  <CustomInput
                     type="file"
-                    name="last_name"
-                    className="form-control"
-                    placeholder="Enter Last Name"
-                    value={this.state.last_name}
-                    onChange={this.changeHandler}
-                  ></Input>
+                    multiple
+                    onChange={this.onChangeHandler}
+                  />
                 </Col>
               </Row>
               <Col lg="6" md="6" sm="6" className="mb-2">

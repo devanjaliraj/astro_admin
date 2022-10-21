@@ -5,6 +5,7 @@ import {
   Input,
   Row,
   Col,
+  CustomInput,
   Button,
   UncontrolledDropdown,
   DropdownMenu,
@@ -61,14 +62,23 @@ class ProductList extends React.Component {
       },
 
       {
-        headerName: "Thumbnail Image",
+        headerName: "Image",
         field: "image",
-        filter: true,
+        filter: false,
         width: 200,
+        setColumnVisible: false,
         cellRendererFramework: (params) => {
           return (
-            <div>
-              <span>{params.data.image}</span>
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.image.map((i) => (
+                <img
+                  className=" rounded-circle  mr-3"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
             </div>
           );
         },
@@ -252,7 +262,7 @@ class ProductList extends React.Component {
                         <Button
                           className=" btn btn-success float-right"
                           onClick={() =>
-                            history.push("/app/productmanager/addproduct")
+                            history.push("/app/productmanager/addProduct")
                           }
                         >
                           Add
