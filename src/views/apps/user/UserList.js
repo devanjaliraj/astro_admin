@@ -48,7 +48,28 @@ class UserList extends React.Component {
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-
+      {
+        headerName: "Image",
+        field: "userimg",
+        filter: false,
+        width: 100,
+        setColumnVisible: false,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.userimg.map((i) => (
+                <img
+                  className=" rounded-circle  mr-3"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
+            </div>
+          );
+        },
+      },
       {
         headerName: "Full Name",
         field: "fullname",

@@ -22,26 +22,25 @@ export default class EditAstrologer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dealer: "",
-      desc: "",
+      approvedstatus: "",
     };
   }
-  componentDidMount() {
-    let { id } = this.props.match.params;
-    axiosConfig
-      .get(`/admin/viewoneabout/${id}`)
-      .then((response) => {
-        console.log(response);
-        this.setState({
-          desc: response.data.data.desc,
+  // componentDidMount() {
+  //   let { id } = this.props.match.params;
+  //   axiosConfig
+  //     .get(`/admin/viewoneabout/${id}`)
+  //     .then((response) => {
+  //       console.log(response);
+  //       this.setState({
+  //         desc: response.data.data.desc,
 
-          //   dealer: response.data.data.dealer,
-        });
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  }
+  //         //   dealer: response.data.data.dealer,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response);
+  //     });
+  // }
 
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -50,11 +49,11 @@ export default class EditAstrologer extends Component {
     e.preventDefault();
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`/admin/edit_aboutus/${id}`, this.state)
+      .post(`/admin/updteApprovedsts/${id}`, this.state)
       .then((response) => {
         console.log(response);
         // swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push(`/app/astrology/AstrologerList`);
+        this.props.history.push(`/app/astrology/astrologerList`);
       })
       .catch((error) => {
         console.log(error.response);
@@ -97,7 +96,7 @@ export default class EditAstrologer extends Component {
                   <Button
                     className=" btn btn-danger float-right"
                     onClick={() =>
-                      history.push("/app/astrology/AstrologerList")
+                      history.push("/app/astrology/astrologerList")
                     }
                   >
                     Back
@@ -110,6 +109,29 @@ export default class EditAstrologer extends Component {
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label className="mb-1">Status</Label>
+                  <div
+                    className="form-label-group"
+                    onChange={(e) => this.changeHandler1(e)}
+                  >
+                    <input
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="approvedstatus"
+                      value="true"
+                    />
+                    <span style={{ marginRight: "20px" }}>Active</span>
+
+                    <input
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="approvedstatus"
+                      value="false"
+                    />
+                    <span style={{ marginRight: "3px" }}>Inactive</span>
+                  </div>
+                </Col>
+                {/* <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Name</Label>
                   <Input
                     type="text"
@@ -174,7 +196,7 @@ export default class EditAstrologer extends Component {
                     // rows="3"
                     placeholder="Enter Age"
                   />
-                </Col>
+                </Col> */}
               </Row>
 
               <Row>

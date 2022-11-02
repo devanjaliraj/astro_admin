@@ -44,9 +44,7 @@ class Profile extends React.Component {
   componentDidMount() {
     // let { id } = this.props.match.params;
     axiosConfig
-      .get(
-        `http://13.235.180.192:8000/admin/viewoneadmin/632d768e9b3a6f64695e1141`
-      )
+      .get(`/admin/viewoneadmin/632d768e9b3a6f64695e1141`)
       .then((response) => {
         //console.log(response.data);
         console.log(response);

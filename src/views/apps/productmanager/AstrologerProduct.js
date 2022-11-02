@@ -11,12 +11,11 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-// import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
+import axiosConfig from "../../../axiosConfig";
+// import axios from "axios";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
-//import classnames from "classnames";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
@@ -50,13 +49,11 @@ class AstrologerProduct extends React.Component {
         headerName: "Product Name",
         field: "productname",
         filter: true,
-        width: 200,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
+              <span>{params.data.product?.productname}</span>
             </div>
           );
         },
@@ -64,15 +61,22 @@ class AstrologerProduct extends React.Component {
 
       {
         headerName: "Thumbnail Image",
-        field: "Thumbnail",
-        filter: true,
-        width: 200,
+        field: "image",
+        filter: false,
+        width: 150,
+        setColumnVisible: false,
         cellRendererFramework: (params) => {
           return (
-            <div>
-              <span>
-                {params.data.firstname} {params.data.lastname}
-              </span>
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.product?.image.map((i) => (
+                <img
+                  className=" rounded-circle  mr-3"
+                  src={i}
+                  alt="user avatar"
+                  height="40"
+                  width="40"
+                />
+              ))}
             </div>
           );
         },
@@ -80,67 +84,71 @@ class AstrologerProduct extends React.Component {
 
       {
         headerName: "Category Name",
-        field: "categoryname",
+        field: "name",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span>{params.data.category?.name}</span>
             </div>
           );
         },
       },
       {
         headerName: "Selling Price",
-        field: "selling price",
+        field: "price",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mobile}</span>
+              <span>{params.data.price}</span>
             </div>
           );
         },
       },
 
-      {
-        headerName: "Discount Price",
-        field: "discount price",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.mobile}</span>
-            </div>
-          );
-        },
-      },
+      // {
+      //   headerName: "Discount Price",
+      //   field: "discount price",
+      //   filter: true,
+      //   width: 200,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div>
+      //         <span>{params.data.mobile}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
 
       {
         headerName: "Status",
         field: "status",
         filter: true,
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.mobile}</span>
+          return params.value === "Active" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
             </div>
-          );
+          ) : params.value === "Deactive" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
+          ) : null;
         },
       },
 
       {
         headerName: "Action",
         field: "sortorder",
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Route
+              {/* <Route
                 render={({ history }) => (
                   <Eye
                     className="mr-50"
@@ -167,7 +175,7 @@ class AstrologerProduct extends React.Component {
                     }
                   />
                 )}
-              />
+              /> */}
               <Trash2
                 className="mr-50"
                 size="25px"
@@ -185,18 +193,16 @@ class AstrologerProduct extends React.Component {
     ],
   };
   async componentDidMount() {
-    await axios
-      .get("http://3.108.185.7:4000/admin/allcustomer")
-      .then((response) => {
-        let rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get("/admin/astro_product_list").then((response) => {
+      let rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axios.get(`http://3.108.185.7:4000/admin/delcustomer/${id}`).then(
+    await axiosConfig.get(`/admin/del_astro_product/${id}`).then(
       (response) => {
         console.log(response);
       },
@@ -248,7 +254,7 @@ class AstrologerProduct extends React.Component {
                       Astrologer Product
                     </h1>
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <Route
                       render={({ history }) => (
                         <Button
@@ -261,7 +267,7 @@ class AstrologerProduct extends React.Component {
                         </Button>
                       )}
                     />
-                  </Col>
+                  </Col> */}
                 </Row>
                 <CardBody>
                   {this.state.rowData === null ? null : (

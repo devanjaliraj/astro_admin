@@ -50,7 +50,7 @@ class AstrologerList extends React.Component {
         headerName: "Name",
         field: "fullname",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -64,7 +64,7 @@ class AstrologerList extends React.Component {
         headerName: "Email",
         field: "email	",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -77,7 +77,7 @@ class AstrologerList extends React.Component {
         headerName: "Mobile No.",
         field: "mobile",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -90,7 +90,7 @@ class AstrologerList extends React.Component {
         headerName: "Gender",
         field: "gender",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -103,7 +103,7 @@ class AstrologerList extends React.Component {
         headerName: "DOB",
         field: "dob",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -116,7 +116,7 @@ class AstrologerList extends React.Component {
         headerName: "Primary Skills",
         field: "primary_skills",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -129,7 +129,7 @@ class AstrologerList extends React.Component {
         headerName: "All Skills",
         field: "all_skills",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -143,7 +143,7 @@ class AstrologerList extends React.Component {
         headerName: "Exprience",
         field: "exp_in_years",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -156,7 +156,7 @@ class AstrologerList extends React.Component {
         headerName: "Language",
         field: "language",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -169,7 +169,7 @@ class AstrologerList extends React.Component {
         headerName: "Call charge ",
         field: "callCharge",
         filter: true,
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -182,7 +182,7 @@ class AstrologerList extends React.Component {
         headerName: "Status",
         field: "status",
         filter: true,
-        width: 220,
+        width: 100,
         cellRendererFramework: (params) => {
           return params.value === "Active" ? (
             <div className="badge badge-pill badge-success">
@@ -199,7 +199,7 @@ class AstrologerList extends React.Component {
       {
         headerName: "Action",
         field: "sortorder",
-        width: 200,
+        width: 100,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -223,7 +223,11 @@ class AstrologerList extends React.Component {
                     className="mr-50"
                     size="25px"
                     color="blue"
-                    onClick={() => history.push("/app/userride/editUserRide")}
+                    onClick={() =>
+                      history.push(
+                        `/app/astrology/editAstrologer/${params.data._id}`
+                      )
+                    }
                   />
                 )}
               />
@@ -254,7 +258,7 @@ class AstrologerList extends React.Component {
     //     this.setState({ rowData });
     //   });
 
-    await axiosConfig.get("/admin/allAstro").then((response) => {
+    await axiosConfig.get("/admin/admin_astrop_list").then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });

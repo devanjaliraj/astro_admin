@@ -45,7 +45,7 @@ export class AddCateHoro extends Component {
   };
 
   onEditorStateChange = (editorState) => {
-    console.log(editorState)
+    console.log(editorState);
     this.setState({
       editorState,
     });
@@ -85,7 +85,6 @@ export class AddCateHoro extends Component {
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
 
   submitHandler = (e) => {
     e.preventDefault();
@@ -217,7 +216,7 @@ export class AddCateHoro extends Component {
                     onChange={this.changeHandler}
                   ></Input>
                 </Col> */}
-                <Col lg="12" md="12" sm="12" className="mb-2">
+                {/* <Col lg="12" md="12" sm="12" className="mb-2">
                   <Label>Description</Label>
                   <Editor
                     // editorState={editorState}
@@ -226,6 +225,16 @@ export class AddCateHoro extends Component {
                     value={this.state.desc}
                     onEditorStateChange={this.onEditorStateChange}
                   />
+                </Col> */}
+                <Col lg="12" md="12" sm="12" className="mb-2">
+                  <Label>Description</Label>
+                  <textarea
+                    className="form-control"
+                    placeholder="Description..."
+                    name="desc"
+                    value={this.state.desc}
+                    onChange={this.changeHandler}
+                  ></textarea>
                 </Col>
               </Row>
               {/* <Col lg="6" md="6" sm="6" className="mb-2">

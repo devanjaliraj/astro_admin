@@ -156,17 +156,15 @@ export class EditUser extends Component {
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
-                {/* <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>DOB</Label>
-                    <Input
-                      required
-                      type="date"
-                      name="sortorder"
-                      placeholder="Enter Confirm  Password"
-                      value={this.state.sortorder}
-                      onChange={this.changeHandler}>
-                    </Input>
-                </Col> */}
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>User Image</Label>
+                  <Input
+                    className="form-control"
+                    type="file"
+                    name="userimg"
+                    onChange={this.onChangeHandler}
+                  />
+                </Col>
                 {/* <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Date Of Register</Label>
                     <Input
@@ -203,7 +201,7 @@ export class EditUser extends Component {
                     </Input>
                 </Col> */}
               </Row>
-              <Col lg="6" md="6" sm="6" className="mb-2">
+              {/* <Col lg="6" md="6" sm="6" className="mb-2">
                 <Label className="mb-1">Status</Label>
                 <div
                   className="form-label-group"
@@ -212,7 +210,7 @@ export class EditUser extends Component {
                   <input
                     style={{ marginRight: "3px" }}
                     type="radio"
-                    name="status"
+                    name="approvedstatus"
                     value="Active"
                   />
                   <span style={{ marginRight: "20px" }}>Active</span>
@@ -225,7 +223,7 @@ export class EditUser extends Component {
                   />
                   <span style={{ marginRight: "3px" }}>Inactive</span>
                 </div>
-              </Col>
+              </Col> */}
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Button.Ripple

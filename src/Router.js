@@ -584,7 +584,7 @@ class AppRouter extends React.Component {
               component={AddAstrologer}
             />
             <AppRoute
-              path="/app/astrology/editAstrologer"
+              path="/app/astrology/editAstrologer/:id"
               component={EditAstrologer}
             />
             <AppRoute

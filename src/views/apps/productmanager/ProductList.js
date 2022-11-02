@@ -99,31 +99,31 @@ class ProductList extends React.Component {
       },
       {
         headerName: "Selling Price",
-        field: "mrp_price",
+        field: "price",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.mrp_price}</span>
+              <span>{params.data.price}</span>
             </div>
           );
         },
       },
 
-      {
-        headerName: "Discount Price",
-        field: "des_price",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.des_price}</span>
-            </div>
-          );
-        },
-      },
+      // {
+      //   headerName: "Discount Price",
+      //   field: "des_price",
+      //   filter: true,
+      //   width: 200,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div>
+      //         <span>{params.data.des_price}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
 
       {
         headerName: "Status",
