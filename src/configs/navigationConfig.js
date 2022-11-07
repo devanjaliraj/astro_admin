@@ -183,12 +183,12 @@ const navigationConfig = [
     icon: <Icon.Package size={20} />,
     children: [
       {
-        id: "allpackage",
-        title: "All Package",
+        id: "allPlan",
+        title: "All Plan List",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/packagemanager/allPackage",
+        navLink: "/app/packagemanager/allPlan",
       },
       {
         id: "userrecharge",

@@ -84,7 +84,10 @@ const EditPrediction = lazy(() =>
   import("./views/apps/prediction/EditPrediction")
 );
 // Package management
-const AllPackage = lazy(() => import("./views/apps/packagemanager/Allpackage"));
+const AllPlan = lazy(() => import("./views/apps/packagemanager/AllPlan"));
+const AddPlan = lazy(() => import("./views/apps/packagemanager/AddPlan"));
+const EditPlan = lazy(() => import("./views/apps/packagemanager/EditPlan"));
+
 const PackageOffer = lazy(() =>
   import("./views/apps/packagemanager/PackageOffer")
 );
@@ -605,9 +608,11 @@ class AppRouter extends React.Component {
             <AppRoute path="/app/coupons/addcoup" component={AddCoup} />
             <AppRoute path="/app/coupons/editcoup" component={EditCoup} />
             {/* Package Management */}
+            <AppRoute path="/app/packagemanager/allPlan" component={AllPlan} />
+            <AppRoute path="/app/packagemanager/addPlan" component={AddPlan} />
             <AppRoute
-              path="/app/packagemanager/allPackage"
-              component={AllPackage}
+              path="/app/packagemanager/editPlan/:id"
+              component={EditPlan}
             />
             <AppRoute
               path="/app/packagemanager/userrecharge"
