@@ -70,8 +70,8 @@ export class AddProduct extends Component {
     data.append("productname", this.state.productname);
     data.append("category", this.state.category);
     data.append("desc", this.state.desc);
-    data.append("mrp_price", this.state.mrp_price);
-    data.append("des_price", this.state.des_price);
+    data.append("price", this.state.mrp_price);
+
     data.append("status", this.state.status);
 
     for (const file of this.state.selectedFile) {
@@ -163,20 +163,20 @@ export class AddProduct extends Component {
                   <Input
                     required
                     type="number"
-                    name="mrp_price"
+                    name="price"
                     placeholder="Enter MRP"
-                    value={this.state.mrp_price}
+                    value={this.state.price}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
                 <Col lg="4" md="4" sm="4" className="mb-2">
-                  <Label>Discount Price</Label>
+                  <Label>limit</Label>
                   <Input
                     required
                     type="number"
-                    name="des_price"
-                    placeholder="Enter Offer Price"
-                    value={this.state.des_price}
+                    name="limit"
+                    placeholder="Enter limit"
+                    value={this.state.limit}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>

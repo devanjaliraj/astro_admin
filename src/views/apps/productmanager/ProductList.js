@@ -111,19 +111,19 @@ class ProductList extends React.Component {
         },
       },
 
-      // {
-      //   headerName: "Discount Price",
-      //   field: "des_price",
-      //   filter: true,
-      //   width: 200,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div>
-      //         <span>{params.data.des_price}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        headerName: "Limit",
+        field: "limit",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.limit}</span>
+            </div>
+          );
+        },
+      },
 
       {
         headerName: "Status",
