@@ -801,7 +801,7 @@ class AppRouter extends React.Component {
               component={AddBlog}
             />
             <AppRoute
-              path="/app/blogmngment/blog/editBlog"
+              path="/app/blogmngment/blog/editBlog/:id"
               component={EditBlog}
             />
             <AppRoute
@@ -818,7 +818,7 @@ class AppRouter extends React.Component {
               component={AddBlogCate}
             />
             <AppRoute
-              path="/app/blogmngment/blogCategory/editBlogCate"
+              path="/app/blogmngment/blogCategory/editBlogCate/:id"
               component={EditBlogCate}
             />
             <AppRoute

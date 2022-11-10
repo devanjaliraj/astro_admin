@@ -116,7 +116,7 @@ class BlogCateList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Route
+              <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
@@ -124,12 +124,12 @@ class BlogCateList extends React.Component {
                     color="blue"
                     onClick={() =>
                       history.push(
-                        `/app/pagesetup/banner/EditBanner/${params.data._id}`
+                        `/app/blogmngment/blogcategory/editBlogCate/${params.data._id}`
                       )
                     }
                   />
                 )}
-              /> */}
+              />
 
               <Trash2
                 className="mr-50"

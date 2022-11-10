@@ -19,6 +19,7 @@ import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
 // import { history } from "../../../../history";
 import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../../assets/scss/pages/users.scss";
+import ReactHtmlParser from "react-html-parser";
 import { Route } from "react-router-dom";
 class BlogList extends React.Component {
   state = {
@@ -102,28 +103,28 @@ class BlogList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.desc}</span>
+              <span>{ReactHtmlParser(params.data.desc)}</span>
             </div>
           );
         },
       },
-      //   {
-      //     headerName: "Status",
-      //     field: "status",
-      //     // filter: true,
-      //     width: 130,
-      //     cellRendererFramework: (params) => {
-      //       return params.value === "Active" ? (
-      //         <div className="badge badge-pill badge-success">
-      //           {params.data.status}
-      //         </div>
-      //       ) : params.value === "Deactive" ? (
-      //         <div className="badge badge-pill badge-warning">
-      //           {params.data.status}
-      //         </div>
-      //       ) : null;
-      //     },
+      // {
+      //   headerName: "Status",
+      //   field: "status",
+      //   // filter: true,
+      //   width: 130,
+      //   cellRendererFramework: (params) => {
+      //     return params.value === "Active" ? (
+      //       <div className="badge badge-pill badge-success">
+      //         {params.data.status}
+      //       </div>
+      //     ) : params.value === "Deactive" ? (
+      //       <div className="badge badge-pill badge-warning">
+      //         {params.data.status}
+      //       </div>
+      //     ) : null;
       //   },
+      // },
 
       {
         headerName: "Actions",
@@ -132,7 +133,7 @@ class BlogList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Route
+              <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
@@ -140,12 +141,12 @@ class BlogList extends React.Component {
                     color="blue"
                     onClick={() =>
                       history.push(
-                        `/app/pagesetup/banner/EditBanner/${params.data._id}`
+                        `/app/blogmngment/blog/editBlog/${params.data._id}`
                       )
                     }
                   />
                 )}
-              /> */}
+              />
 
               <Trash2
                 className="mr-50"

@@ -208,14 +208,6 @@ const navigationConfig = [
       },
     ],
   },
-  {
-    id: "predictionList",
-    title: "Prediction List",
-    type: "item",
-    icon: <Icon.BarChart2 size={20} />,
-    permissions: ["admin", "editor"],
-    navLink: "/app/prediction/predictionList",
-  },
 
   {
     id: "packageList",
