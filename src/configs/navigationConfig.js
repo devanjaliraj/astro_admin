@@ -268,16 +268,30 @@ const navigationConfig = [
     permissions: ["admin", "editor"],
     navLink: "/withdrawrequestlist",
   },
-
   {
-    id: "blogList",
+    id: "blogmngment",
     title: "Blog Management",
-    type: "item",
-    icon: <Icon.Video size={20} />,
-    permissions: ["admin", "editor"],
-    navLink: "/app/blogmngment/blogList",
+    type: "collapse",
+    icon: <Icon.Package size={20} />,
+    children: [
+      {
+        id: "blogList",
+        title: "Blog ",
+        type: "item",
+        icon: <Icon.Video size={20} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/blogmngment/blog/blogList",
+      },
+      {
+        id: "blogCateList",
+        title: "Blog Category",
+        type: "item",
+        icon: <Icon.Video size={20} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/blogmngment/blogCategory/blogCateList",
+      },
+    ],
   },
-
   {
     id: "payouts",
     title: "Payouts ",

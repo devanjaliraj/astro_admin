@@ -214,10 +214,24 @@ const FaqList = lazy(() => import("./views/apps/pagesetup/faq/FaqList"));
 const AddFaq = lazy(() => import("./views/apps/pagesetup/faq/AddFaq"));
 
 // Blog
-const BlogList = lazy(() => import("./views/apps/blogmngment/BlogList"));
-const AddBlog = lazy(() => import("./views/apps/blogmngment/AddBlog"));
-const EditBlog = lazy(() => import("./views/apps/blogmngment/EditBlog"));
-const ViewBlog = lazy(() => import("./views/apps/blogmngment/ViewBlog"));
+const BlogList = lazy(() => import("./views/apps/blogmngment/blog/BlogList"));
+const AddBlog = lazy(() => import("./views/apps/blogmngment/blog/AddBlog"));
+const EditBlog = lazy(() => import("./views/apps/blogmngment/blog/EditBlog"));
+const ViewBlog = lazy(() => import("./views/apps/blogmngment/blog/ViewBlog"));
+
+// Blog Category
+const BlogCateList = lazy(() =>
+  import("./views/apps/blogmngment/blogcategory/BlogCateList")
+);
+const AddBlogCate = lazy(() =>
+  import("./views/apps/blogmngment/blogcategory/AddBlogCate")
+);
+const EditBlogCate = lazy(() =>
+  import("./views/apps/blogmngment/blogcategory/EditBlogCate")
+);
+const ViewBlogCate = lazy(() =>
+  import("./views/apps/blogmngment/blogcategory/ViewBlogCate")
+);
 
 // rashihoroscope
 const RashiHorocopeList = lazy(() =>
@@ -778,10 +792,39 @@ class AppRouter extends React.Component {
             <AppRoute path="/app/pagesetup/faq/faqList" component={FaqList} />
             <AppRoute path="/app/pagesetup/faq/addFaq" component={AddFaq} />
             {/* blog */}
-            <AppRoute path="/app/blogmngment/blogList" component={BlogList} />
-            <AppRoute path="/app/blogmngment/addBlog" component={AddBlog} />
-            <AppRoute path="/app/blogmngment/editBlog" component={EditBlog} />
-            <AppRoute path="/app/blogmngment/viewBlog" component={ViewBlog} />
+            <AppRoute
+              path="/app/blogmngment/blog/blogList"
+              component={BlogList}
+            />
+            <AppRoute
+              path="/app/blogmngment/blog/addBlog"
+              component={AddBlog}
+            />
+            <AppRoute
+              path="/app/blogmngment/blog/editBlog"
+              component={EditBlog}
+            />
+            <AppRoute
+              path="/app/blogmngment/blog/viewBlog"
+              component={ViewBlog}
+            />
+            {/* blog Category */}
+            <AppRoute
+              path="/app/blogmngment/blogCategory/blogCateList"
+              component={BlogCateList}
+            />
+            <AppRoute
+              path="/app/blogmngment/blogCategory/addBlogCate"
+              component={AddBlogCate}
+            />
+            <AppRoute
+              path="/app/blogmngment/blogCategory/editBlogCate"
+              component={EditBlogCate}
+            />
+            <AppRoute
+              path="/app/blogmngment/blogCategory/viewBlogCate"
+              component={ViewBlogCate}
+            />
             {/* rashihoroscope  */}
             <AppRoute
               path="/app/rashihoroscope/rashihoroscopelist"

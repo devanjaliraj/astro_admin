@@ -11,16 +11,15 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
-import { ContextLayout } from "../../../utility/context/Layout";
+import axiosConfig from "../../../../axiosConfig";
+import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
-//import classnames from "classnames";
-// import { history } from "../../../../history";
-import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../assets/scss/pages/users.scss";
+import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
-class BlogList extends React.Component {
+import ReactHtmlParser from "react-html-parser";
+class BlogCateList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -44,31 +43,29 @@ class BlogList extends React.Component {
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-
       {
-        headerName: "Title",
-        field: "blog_title",
+        headerName: "Name",
+        field: "name",
         // filter: true,
         width: 250,
-        // pinned: window.innerWidth > 992 ? "left" : false,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.blog_title}</span>
+              <span>{params.data.name}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Blog Image",
-        field: "blogImg",
+        headerName: "Blog Category Image",
+        field: "img",
         filter: false,
         width: 200,
         setColumnVisible: false,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.blogImg.map((i) => (
+              {params.data.img.map((i) => (
                 <img
                   className=" rounded-circle  mr-3"
                   src={i}
@@ -82,57 +79,40 @@ class BlogList extends React.Component {
         },
       },
       {
-        headerName: "Blog Category",
-        field: "blogcategory",
-        // filter: true,
-        width: 250,
-        // pinned: window.innerWidth > 992 ? "left" : false,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.blogcategory?.name}</span>
-            </div>
-          );
-        },
-      },
-
-      {
         headerName: "Description",
         field: "desc",
         // filter: true,
         width: 500,
-        // pinned: window.innerWidth > 992 ? "left" : false,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.desc}</span>
+              <span>{ReactHtmlParser(params.data.desc)}</span>
             </div>
           );
         },
       },
-      //   {
-      //     headerName: "Status",
-      //     field: "status",
-      //     // filter: true,
-      //     width: 130,
-      //     cellRendererFramework: (params) => {
-      //       return params.value === "Active" ? (
-      //         <div className="badge badge-pill badge-success">
-      //           {params.data.status}
-      //         </div>
-      //       ) : params.value === "Deactive" ? (
-      //         <div className="badge badge-pill badge-warning">
-      //           {params.data.status}
-      //         </div>
-      //       ) : null;
-      //     },
-      //   },
+      {
+        headerName: "Status",
+        field: "status",
+        // filter: true,
+        width: 130,
+        cellRendererFramework: (params) => {
+          return params.value === "Active" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
+            </div>
+          ) : params.value === "Deactive" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
+          ) : null;
+        },
+      },
 
       {
         headerName: "Actions",
         field: "sortorder",
         width: 150,
-        // pinned: window.innerWidth > 992 ? "right" : false,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -169,21 +149,15 @@ class BlogList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig
-      .get("admin/getBlog", {
-        // headers: {
-        //   "auth-adtoken": localStorage.getItem("auth-adtoken"),
-        // },
-      })
-      .then((response) => {
-        const rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get("admin/all_blog_category").then((response) => {
+      const rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`admin/delBlog/${id}`).then(
+    await axiosConfig.get(`admin/dlt_blog_cat/${id}`).then(
       (response) => {
         console.log(response);
       },
@@ -228,7 +202,7 @@ class BlogList extends React.Component {
               <Row className="m-2">
                 <Col>
                   <h1 sm="6" className="float-left">
-                    Blog List
+                    Blog Category List
                   </h1>
                 </Col>
                 <Col>
@@ -236,9 +210,13 @@ class BlogList extends React.Component {
                     render={({ history }) => (
                       <Button
                         className="btn btn-success float-right"
-                        onClick={() => history.push("/app/blogmngment/addBlog")}
+                        onClick={() =>
+                          history.push(
+                            "/app/blogmngment/blogcategory/addBlogCate"
+                          )
+                        }
                       >
-                        Add blog
+                        Add blog Category
                       </Button>
                     )}
                   />
@@ -343,4 +321,4 @@ class BlogList extends React.Component {
     );
   }
 }
-export default BlogList;
+export default BlogCateList;

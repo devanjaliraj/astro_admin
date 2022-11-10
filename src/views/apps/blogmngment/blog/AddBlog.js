@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardBody,
   Row,
   Col,
@@ -14,14 +12,16 @@ import {
   Breadcrumb,
   BreadcrumbItem,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
-// import { history } from "../../../../history";
+import axiosConfig from "../../../../axiosConfig";
 import swal from "sweetalert";
 import { Route } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
+import { EditorState, convertToRaw } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import draftToHtml from "draftjs-to-html";
 
+import "react-toastify/dist/ReactToastify.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "../../../assets/scss/plugins/extensions/editor.scss";
+import "../../../../assets/scss/plugins/extensions/editor.scss";
 export default class AddBlog extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +30,8 @@ export default class AddBlog extends Component {
       desc: "",
       blogcategory: "",
       blogImg: "",
+      editorState: EditorState.createEmpty(),
+
       selectedFile: undefined,
       selectedName: "",
     };
@@ -37,6 +39,12 @@ export default class AddBlog extends Component {
       categoryB: [],
     };
   }
+  onEditorStateChange = (editorState) => {
+    this.setState({
+      editorState,
+      desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    });
+  };
   onChangeHandler = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
     this.setState({ selectedName: event.target.files[0].name });
@@ -93,7 +101,7 @@ export default class AddBlog extends Component {
         console.log(response.data);
 
         swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push("/app/blogmngment/blogList");
+        this.props.history.push("/app/blogmngment/blog/blogList");
       })
       .catch((error) => {
         console.log(error);
@@ -110,7 +118,7 @@ export default class AddBlog extends Component {
                 <BreadcrumbItem href="/analyticsDashboard" tag="a">
                   Home
                 </BreadcrumbItem>
-                <BreadcrumbItem href="/app/blogmngment/blogList" tag="a">
+                <BreadcrumbItem href="/app/blogmngment/blog/blogList" tag="a">
                   Blog List
                 </BreadcrumbItem>
                 <BreadcrumbItem active>Add Blog</BreadcrumbItem>
@@ -130,7 +138,9 @@ export default class AddBlog extends Component {
                 render={({ history }) => (
                   <Button
                     className=" btn btn-success float-right"
-                    onClick={() => history.push("/app/blogmngment/blogList")}
+                    onClick={() =>
+                      history.push("/app/blogmngment/blog/blogList")
+                    }
                   >
                     Back
                   </Button>
@@ -155,7 +165,6 @@ export default class AddBlog extends Component {
                 <Col lg="4" md="4" sm="4" className="mb-2">
                   <Label>Blog Image</Label>
 
-                  <Label>Image</Label>
                   <CustomInput
                     type="file"
                     // multiple
@@ -180,16 +189,49 @@ export default class AddBlog extends Component {
                     ))}
                   </CustomInput>
                 </Col>
-                <Col lg="6" md="6" sm="6" className="mb-2">
+                <Col lg="12" md="12" sm="12" className="mb-2">
                   <Label>Description</Label>
-                  <Input
-                    required
-                    type="text"
-                    name="desc"
-                    placeholder=""
-                    value={this.state.desc}
-                    onChange={this.changeHandler}
-                  ></Input>
+                  <Editor
+                    toolbarClassName="demo-toolbar-absolute"
+                    wrapperClassName="demo-wrapper"
+                    editorClassName="demo-editor"
+                    editorState={this.state.editorState}
+                    onEditorStateChange={this.onEditorStateChange}
+                    toolbar={{
+                      options: [
+                        "inline",
+                        "blockType",
+                        "fontSize",
+                        "fontFamily",
+                      ],
+                      inline: {
+                        options: [
+                          "bold",
+                          "italic",
+                          "underline",
+                          "strikethrough",
+                          "monospace",
+                        ],
+                        bold: { className: "bordered-option-classname" },
+                        italic: { className: "bordered-option-classname" },
+                        underline: { className: "bordered-option-classname" },
+                        strikethrough: {
+                          className: "bordered-option-classname",
+                        },
+                        code: { className: "bordered-option-classname" },
+                      },
+                      blockType: {
+                        className: "bordered-option-classname",
+                      },
+                      fontSize: {
+                        className: "bordered-option-classname",
+                      },
+                      fontFamily: {
+                        className: "bordered-option-classname",
+                      },
+                    }}
+                  />
+                  <br />
                 </Col>
               </Row>
               <Row>

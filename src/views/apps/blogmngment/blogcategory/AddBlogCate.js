@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardBody,
   Row,
   Col,
@@ -14,29 +12,35 @@ import {
   Breadcrumb,
   BreadcrumbItem,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
-// import { history } from "../../../../history";
+import axiosConfig from "../../../../axiosConfig";
 import swal from "sweetalert";
 import { Route } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
+import { EditorState, convertToRaw } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import draftToHtml from "draftjs-to-html";
 
+import "react-toastify/dist/ReactToastify.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "../../../assets/scss/plugins/extensions/editor.scss";
-export default class AddBlog extends Component {
+import "../../../../assets/scss/plugins/extensions/editor.scss";
+export default class AddBlogCate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      blog_title: "",
+      name: "",
       desc: "",
-      blogcategory: "",
-      blogImg: "",
+      editorState: EditorState.createEmpty(),
+      status: "",
+      img: "",
       selectedFile: undefined,
       selectedName: "",
     };
-    this.state = {
-      categoryB: [],
-    };
   }
+  onEditorStateChange = (editorState) => {
+    this.setState({
+      editorState,
+      desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    });
+  };
   onChangeHandler = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
     this.setState({ selectedName: event.target.files[0].name });
@@ -54,30 +58,17 @@ export default class AddBlog extends Component {
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  async componentDidMount() {
-    axiosConfig
-      .get("/admin/all_blog_category")
-      .then((response) => {
-        console.log(response);
-        this.setState({
-          categoryB: response.data.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
   submitHandler = (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("blog_title", this.state.blog_title);
+    data.append("name", this.state.name);
     data.append("desc", this.state.desc);
-    data.append("blogcategory", this.state.blogcategory);
+    data.append("status", this.state.status);
 
     for (const file of this.state.selectedFile) {
       if (this.state.selectedFile !== null) {
-        data.append("blogImg", file, file.name);
+        data.append("img", file, file.name);
       }
     }
     for (var value of data.values()) {
@@ -87,13 +78,13 @@ export default class AddBlog extends Component {
       console.log(key);
     }
     axiosConfig
-      .post(`admin/addBlog`, data)
+      .post(`admin/add_blog_category`, data)
 
       .then((response) => {
         console.log(response.data);
 
         swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push("/app/blogmngment/blogList");
+        this.props.history.push("/app/blogmngment/blogcategory/blogCateList");
       })
       .catch((error) => {
         console.log(error);
@@ -110,10 +101,13 @@ export default class AddBlog extends Component {
                 <BreadcrumbItem href="/analyticsDashboard" tag="a">
                   Home
                 </BreadcrumbItem>
-                <BreadcrumbItem href="/app/blogmngment/blogList" tag="a">
-                  Blog List
+                <BreadcrumbItem
+                  href="/app/blogmngment/blogcategory/blogCateList"
+                  tag="a"
+                >
+                  Blog Category List
                 </BreadcrumbItem>
-                <BreadcrumbItem active>Add Blog</BreadcrumbItem>
+                <BreadcrumbItem active>Add Blog Category</BreadcrumbItem>
               </Breadcrumb>
             </div>
           </Col>
@@ -122,7 +116,7 @@ export default class AddBlog extends Component {
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                Add Blog
+                Add Blog Category
               </h1>
             </Col>
             <Col>
@@ -130,7 +124,9 @@ export default class AddBlog extends Component {
                 render={({ history }) => (
                   <Button
                     className=" btn btn-success float-right"
-                    onClick={() => history.push("/app/blogmngment/blogList")}
+                    onClick={() =>
+                      history.push("/app/blogmngment/blogcategory/blogCateList")
+                    }
                   >
                     Back
                   </Button>
@@ -142,13 +138,13 @@ export default class AddBlog extends Component {
             <Form className="m-1" onSubmit={this.submitHandler}>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Title</Label>
+                  <Label>Name</Label>
                   <Input
                     required
                     type="text"
-                    name="blog_title"
+                    name="name"
                     placeholder=""
-                    value={this.state.blog_title}
+                    value={this.state.name}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
@@ -163,33 +159,72 @@ export default class AddBlog extends Component {
                   />
                 </Col>
 
-                <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Blog Category</Label>
-
-                  <CustomInput
-                    type="select"
-                    name="blogcategory"
-                    value={this.state.blogcategory}
-                    onChange={this.changeHandler}
-                  >
-                    <option>select blog category</option>
-                    {this.state.categoryB?.map((allCategory) => (
-                      <option value={allCategory?._id} key={allCategory?._id}>
-                        {allCategory?.name}
-                      </option>
-                    ))}
-                  </CustomInput>
+                <Col lg="12" md="12" sm="12" className="mb-2">
+                  <Label>Description</Label>
+                  <Editor
+                    toolbarClassName="demo-toolbar-absolute"
+                    wrapperClassName="demo-wrapper"
+                    editorClassName="demo-editor"
+                    editorState={this.state.editorState}
+                    onEditorStateChange={this.onEditorStateChange}
+                    toolbar={{
+                      options: [
+                        "inline",
+                        "blockType",
+                        "fontSize",
+                        "fontFamily",
+                      ],
+                      inline: {
+                        options: [
+                          "bold",
+                          "italic",
+                          "underline",
+                          "strikethrough",
+                          "monospace",
+                        ],
+                        bold: { className: "bordered-option-classname" },
+                        italic: { className: "bordered-option-classname" },
+                        underline: { className: "bordered-option-classname" },
+                        strikethrough: {
+                          className: "bordered-option-classname",
+                        },
+                        code: { className: "bordered-option-classname" },
+                      },
+                      blockType: {
+                        className: "bordered-option-classname",
+                      },
+                      fontSize: {
+                        className: "bordered-option-classname",
+                      },
+                      fontFamily: {
+                        className: "bordered-option-classname",
+                      },
+                    }}
+                  />
+                  <br />
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
-                  <Label>Description</Label>
-                  <Input
-                    required
-                    type="text"
-                    name="desc"
-                    placeholder=""
-                    value={this.state.desc}
-                    onChange={this.changeHandler}
-                  ></Input>
+                  <Label className="mb-1">Status</Label>
+                  <div
+                    className="form-label-group"
+                    onChange={(e) => this.changeHandler1(e)}
+                  >
+                    <input
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="status"
+                      value="Active"
+                    />
+                    <span style={{ marginRight: "20px" }}>Active</span>
+
+                    <input
+                      style={{ marginRight: "3px" }}
+                      type="radio"
+                      name="status"
+                      value="Inactive"
+                    />
+                    <span style={{ marginRight: "3px" }}>Inactive</span>
+                  </div>
                 </Col>
               </Row>
               <Row>

@@ -11,14 +11,14 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
-import { ContextLayout } from "../../../utility/context/Layout";
+import axiosConfig from "../../../../axiosConfig";
+import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
 //import classnames from "classnames";
 // import { history } from "../../../../history";
-import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../assets/scss/pages/users.scss";
+import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 class BlogList extends React.Component {
   state = {
@@ -50,7 +50,6 @@ class BlogList extends React.Component {
         field: "blog_title",
         // filter: true,
         width: 250,
-        // pinned: window.innerWidth > 992 ? "left" : false,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -86,7 +85,6 @@ class BlogList extends React.Component {
         field: "blogcategory",
         // filter: true,
         width: 250,
-        // pinned: window.innerWidth > 992 ? "left" : false,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -101,7 +99,6 @@ class BlogList extends React.Component {
         field: "desc",
         // filter: true,
         width: 500,
-        // pinned: window.innerWidth > 992 ? "left" : false,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -132,7 +129,6 @@ class BlogList extends React.Component {
         headerName: "Actions",
         field: "sortorder",
         width: 150,
-        // pinned: window.innerWidth > 992 ? "right" : false,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -169,17 +165,11 @@ class BlogList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig
-      .get("admin/getBlog", {
-        // headers: {
-        //   "auth-adtoken": localStorage.getItem("auth-adtoken"),
-        // },
-      })
-      .then((response) => {
-        const rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get("admin/getBlog").then((response) => {
+      const rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
   async runthisfunction(id) {
     console.log(id);
@@ -236,7 +226,9 @@ class BlogList extends React.Component {
                     render={({ history }) => (
                       <Button
                         className="btn btn-success float-right"
-                        onClick={() => history.push("/app/blogmngment/addBlog")}
+                        onClick={() =>
+                          history.push("/app/blogmngment/blog/addBlog")
+                        }
                       >
                         Add blog
                       </Button>
