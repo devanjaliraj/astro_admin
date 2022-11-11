@@ -21,6 +21,7 @@ import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import ReactHtmlParser from "react-html-parser";
 
 class RashiHoroscopeList extends React.Component {
   state = {
@@ -82,7 +83,7 @@ class RashiHoroscopeList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.sort_desc}</span>
+              <span>{ReactHtmlParser(params.data.sort_desc)}</span>
             </div>
           );
         },
@@ -96,7 +97,7 @@ class RashiHoroscopeList extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.long_desc}</span>
+              <span>{ReactHtmlParser(params.data.long_desc)}</span>
             </div>
           );
         },
@@ -144,7 +145,7 @@ class RashiHoroscopeList extends React.Component {
                     color="blue"
                     onClick={() =>
                       history.push(
-                        `/app/horoscope/horoscopeedit/${params.data._id}`
+                        `/app/rashihoroscope/editRashiHoro/${params.data._id}`
                       )
                     }
                   />
@@ -167,16 +168,6 @@ class RashiHoroscopeList extends React.Component {
     ],
   };
   async componentDidMount() {
-    // let { id } = this.props.match.params;
-
-    // await axios
-    //   .get(`http://3.108.185.7:4000/user/view_onecust/${id}`)
-    //   .then((response) => {
-    //     let rowData = response.data.data;
-    //     console.log(rowData);
-    //     this.setState({ rowData });
-    //   });
-
     await axiosConfig.get("/admin/get_Rhscope").then((response) => {
       let rowData = response.data.data;
       console.log(rowData);

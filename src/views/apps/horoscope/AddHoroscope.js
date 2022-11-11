@@ -10,14 +10,15 @@ import {
   Button,
   FormGroup,
 } from "reactstrap";
-//import axios from "axios";
 import axiosConfig from "../../../axiosConfig";
-// import { useParams } from "react-router-dom";
-//import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { EditorState, convertToRaw } from "draft-js";
+import "../../../assets/scss/plugins/extensions/editor.scss";
+import draftToHtml from "draftjs-to-html";
 import { data } from "jquery";
 import swal from "sweetalert";
 export class AddHoroscope extends Component {
@@ -27,9 +28,34 @@ export class AddHoroscope extends Component {
       title: "",
       category: "",
       desc: "",
+      editorState: EditorState.createEmpty(),
     };
   }
+  uploadImageCallBack = (file) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.imgur.com/3/image");
+      xhr.setRequestHeader("Authorization", "Client-ID 7e1c3e366d22aa3");
+      const data = new FormData();
+      data.append("image", file);
+      xhr.send(data);
+      xhr.addEventListener("load", () => {
+        const response = JSON.parse(xhr.responseText);
+        resolve(response);
+      });
+      xhr.addEventListener("error", () => {
+        const error = JSON.parse(xhr.responseText);
+        reject(error);
+      });
+    });
+  };
 
+  onEditorStateChange = (editorState) => {
+    this.setState({
+      editorState,
+      desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    });
+  };
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
   };
@@ -73,7 +99,9 @@ export class AddHoroscope extends Component {
                 render={({ history }) => (
                   <Button
                     className=" btn btn-danger float-right"
-                    onClick={() => history.push("/app/customer/customerList")}
+                    onClick={() =>
+                      history.push("/app/horoscope/horoscopecategory")
+                    }
                   >
                     Back
                   </Button>
@@ -93,8 +121,7 @@ export class AddHoroscope extends Component {
                     placeholder="Enter Title"
                     value={this.state.title}
                     onChange={this.changeHandler}
-                  >
-                  </Input>
+                  ></Input>
                 </Col>
                 <Col lg="6" md="6" sm="12" className="mb-2">
                   <Label>Category</Label>
@@ -102,20 +129,33 @@ export class AddHoroscope extends Component {
                     required
                     type="text"
                     name="category"
-                    placeholder="Enter MRP"
+                    placeholder="Enter Category"
                     value={this.state.category}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
                 <Col lg="12" md="12" sm="12" className="mb-2">
-                  <Label>Description</Label>
-                  <textarea
-                    className="form-control"
-                    placeholder="Description..."
-                    name="desc"
-                    value={this.state.desc}
-                    onChange={this.changeHandler}
-                  ></textarea>
+                  <Label> Description</Label>
+
+                  <br />
+
+                  <Editor
+                    wrapperClassName="demo-wrapper"
+                    editorClassName="demo-editor"
+                    onEditorStateChange={this.onEditorStateChange}
+                    toolbar={{
+                      inline: { inDropdown: true },
+                      list: { inDropdown: true },
+                      textAlign: { inDropdown: true },
+                      link: { inDropdown: true },
+                      history: { inDropdown: true },
+                      image: {
+                        uploadCallback: this.uploadImageCallBack,
+                        previewImage: true,
+                        alt: { present: true, mandatory: true },
+                      },
+                    }}
+                  />
                 </Col>
               </Row>
               {/* <Col lg="6" md="6" sm="6" className="mb-2">

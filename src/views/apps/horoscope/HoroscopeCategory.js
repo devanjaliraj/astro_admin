@@ -16,12 +16,13 @@ import axios from "axios";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
+
 //import classnames from "classnames";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-
+import ReactHtmlParser from "react-html-parser";
 class HoroscopeCategory extends React.Component {
   state = {
     rowData: [],
@@ -81,7 +82,7 @@ class HoroscopeCategory extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.desc}</span>
+              <span>{ReactHtmlParser(params.data.desc)}</span>
             </div>
           );
         },
@@ -157,7 +158,7 @@ class HoroscopeCategory extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axios.get(`/admin/dltCategory/${id}`).then(
+    await axios.get(`/admin/dlt_Rhscope/${id}`).then(
       (response) => {
         console.log(response);
       },

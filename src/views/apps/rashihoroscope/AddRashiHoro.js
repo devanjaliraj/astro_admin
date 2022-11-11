@@ -8,6 +8,7 @@ import {
   Input,
   Label,
   Button,
+  CustomInput,
   FormGroup,
 } from "reactstrap";
 //import axios from "axios";
@@ -17,12 +18,14 @@ import axiosConfig from "../../../axiosConfig";
 import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-import { EditorState } from "draft-js";
+
 import { data } from "jquery";
 import swal from "sweetalert";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { EditorState, convertToRaw } from "draft-js";
 import "../../../assets/scss/plugins/extensions/editor.scss";
+import draftToHtml from "draftjs-to-html";
 
 export class AddRashiHoro extends Component {
   constructor(props) {
@@ -32,17 +35,42 @@ export class AddRashiHoro extends Component {
       sort_desc: "",
       long_desc: "",
       rashiId: "",
+      editorState: EditorState.createEmpty(),
+      editorState1: EditorState.createEmpty(),
+    };
+    this.state = {
+      rashiN: [],
     };
   }
-
-  state = {
-    editorState: EditorState.createEmpty(),
+  uploadImageCallBack = (file) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.imgur.com/3/image");
+      xhr.setRequestHeader("Authorization", "Client-ID 7e1c3e366d22aa3");
+      const data = new FormData();
+      data.append("image", file);
+      xhr.send(data);
+      xhr.addEventListener("load", () => {
+        const response = JSON.parse(xhr.responseText);
+        resolve(response);
+      });
+      xhr.addEventListener("error", () => {
+        const error = JSON.parse(xhr.responseText);
+        reject(error);
+      });
+    });
   };
 
   onEditorStateChange = (editorState) => {
-    console.log("editorState", editorState);
     this.setState({
       editorState,
+      sort_desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    });
+  };
+  onEditorStateChange1 = (editorState1) => {
+    this.setState({
+      editorState1,
+      long_desc: draftToHtml(convertToRaw(editorState1.getCurrentContent())),
     });
   };
 
@@ -53,6 +81,19 @@ export class AddRashiHoro extends Component {
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  async componentDidMount() {
+    axiosConfig
+      .get("/admin/Rashilist")
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          rashiN: response.data.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   submitHandler = (e) => {
     e.preventDefault();
 
@@ -75,7 +116,6 @@ export class AddRashiHoro extends Component {
   };
 
   render() {
-    const { editorState } = this.state;
     return (
       <div>
         <Breadcrumbs
@@ -119,7 +159,7 @@ export class AddRashiHoro extends Component {
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
-                <Col lg="6" md="6" sm="12" className="mb-2">
+                {/* <Col lg="6" md="6" sm="12" className="mb-2">
                   <Label>Rashi</Label>
                   <Input
                     required
@@ -129,11 +169,30 @@ export class AddRashiHoro extends Component {
                     value={this.state.category}
                     onChange={this.changeHandler}
                   ></Input>
+                </Col> */}
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Rashi</Label>
+
+                  <CustomInput
+                    type="select"
+                    name="rashiId"
+                    value={this.state.rashiId}
+                    onChange={this.changeHandler}
+                  >
+                    <option>select Rashi</option>
+                    {this.state.rashiN?.map((allRashi) => (
+                      <option value={allRashi?._id} key={allRashi?._id}>
+                        {allRashi?.rashi_title}
+                      </option>
+                    ))}
+                  </CustomInput>
                 </Col>
                 <Col lg="12" md="12" sm="12" className="mb-2">
                   <Label>Short Description</Label>
+
+                  <br />
+
                   <Editor
-                    editorState={editorState}
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
                     onEditorStateChange={this.onEditorStateChange}
@@ -143,19 +202,36 @@ export class AddRashiHoro extends Component {
                       textAlign: { inDropdown: true },
                       link: { inDropdown: true },
                       history: { inDropdown: true },
+                      image: {
+                        uploadCallback: this.uploadImageCallBack,
+                        previewImage: true,
+                        alt: { present: true, mandatory: true },
+                      },
                     }}
-                  />{" "}
+                  />
                 </Col>
 
                 <Col lg="12" md="12" sm="12" className="mb-2">
                   <Label>Long Description</Label>
+
+                  <br />
+
                   <Editor
-                    name="long_desc"
-                    editorState={editorState}
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
-                    onEditorStateChange={this.onEditorStateChange}
-                    onChange={(event) => this.handleInputChange(event)}
+                    onEditorStateChange={this.onEditorStateChange1}
+                    toolbar={{
+                      inline: { inDropdown: true },
+                      list: { inDropdown: true },
+                      textAlign: { inDropdown: true },
+                      link: { inDropdown: true },
+                      history: { inDropdown: true },
+                      image: {
+                        uploadCallback: this.uploadImageCallBack,
+                        previewImage: true,
+                        alt: { present: true, mandatory: true },
+                      },
+                    }}
                   />
                 </Col>
               </Row>
