@@ -213,6 +213,20 @@ const EditTermCondition = lazy(() =>
 const FaqList = lazy(() => import("./views/apps/pagesetup/faq/FaqList"));
 const AddFaq = lazy(() => import("./views/apps/pagesetup/faq/AddFaq"));
 
+// Rashi Horoscope
+const RashiHoroscope = lazy(() =>
+  import("./views/apps/rashihoro/RashiHoroscope")
+);
+const AddRashiHoroscope = lazy(() =>
+  import("./views/apps/rashihoro/AddRashiHoroscope")
+);
+const EditRashiHoroscope = lazy(() =>
+  import("./views/apps/rashihoro/EditRashiHoroscope")
+);
+const ViewRashiHoroscope = lazy(() =>
+  import("./views/apps/rashihoro/ViewRashiHoroscope")
+);
+
 // Blog
 const BlogList = lazy(() => import("./views/apps/blogmngment/blog/BlogList"));
 const AddBlog = lazy(() => import("./views/apps/blogmngment/blog/AddBlog"));
@@ -791,6 +805,23 @@ class AppRouter extends React.Component {
             />
             <AppRoute path="/app/pagesetup/faq/faqList" component={FaqList} />
             <AppRoute path="/app/pagesetup/faq/addFaq" component={AddFaq} />
+            {/* Rashi Horoscope */}
+            <AppRoute
+              path="/app/rashihoro/rashiHoroscope"
+              component={RashiHoroscope}
+            />
+            <AppRoute
+              path="/app/rashihoro/addRashiHoroscope"
+              component={AddRashiHoroscope}
+            />
+            <AppRoute
+              path="/app/rashihoro/editRashiHoroscope/:id"
+              component={EditRashiHoroscope}
+            />
+            <AppRoute
+              path="/app/rashihoro/viewRashiHoroscope"
+              component={ViewRashiHoroscope}
+            />
             {/* blog */}
             <AppRoute
               path="/app/blogmngment/blog/blogList"

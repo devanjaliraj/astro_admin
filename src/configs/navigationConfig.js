@@ -105,6 +105,15 @@ const navigationConfig = [
   },
 
   {
+    id: "rashiHoroscope",
+    title: "Rashi Horoscope List ",
+    type: "item",
+    icon: <Icon.Table size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/rashihoro/rashiHoroscope",
+  },
+
+  {
     type: "groupHeader",
     groupTitle: "Porduct Management",
   },
