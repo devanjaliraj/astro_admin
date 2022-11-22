@@ -180,17 +180,17 @@ class AstrologerList extends React.Component {
       },
       {
         headerName: "Status",
-        field: "status",
+        field: "approvedstatus",
         filter: true,
         width: 100,
         cellRendererFramework: (params) => {
-          return params.value === "Active" ? (
+          return params.value === "true" ? (
             <div className="badge badge-pill badge-success">
-              {params.data.status}
+              {params.data.approvedstatus}
             </div>
-          ) : params.value === "Deactive" ? (
+          ) : params.value === "false" ? (
             <div className="badge badge-pill badge-warning">
-              {params.data.status}
+              {params.data.approvedstatus}
             </div>
           ) : null;
         },

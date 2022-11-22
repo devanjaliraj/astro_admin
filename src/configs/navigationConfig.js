@@ -65,54 +65,137 @@ const navigationConfig = [
 
   {
     type: "groupHeader",
-    groupTitle: "Horoscope Management",
+    groupTitle: "Horoscopes",
   },
+  // {
+  //   id: "horoscopes",
+  //   title: "Horoscopes",
+  //   type: "collapse",
+  //   icon: <Icon.Box size={20} />,
+  //   children: [
+  //     {
+  //       id: "horoscopeList",
+  //       title: "Horoscope ",
+  //       type: "item",
+  //       icon: <Icon.FileText size={12} />,
+  //       permissions: ["admin", "editor"],
+  //       navLink: "/app/horoscopes/horoscope/horoscopeList",
+  //     },
 
+  //     {
+  //       id: "todayHoroscopeList",
+  //       title: "Today Horoscope",
+  //       type: "item",
+  //       icon: <Icon.FileText size={12} />,
+  //       permissions: ["admin", "editor"],
+  //       navLink: "/app/horoscopes/todayshoroscope/todayHoroscopeList",
+  //     },
+
+  //     {
+  //       id: "weeklyHoroscopeList",
+  //       title: "Weekly Horoscope",
+  //       type: "item",
+  //       icon: <Icon.FileText size={12} />,
+  //       permissions: ["admin", "editor"],
+  //       navLink: "/app/horoscopes/weeklyhoroscope/weeklyHoroscopeList",
+  //     },
+
+  //     {
+  //       id: "monthlyHoroscopeList",
+  //       title: "Monthly Horoscope",
+  //       type: "item",
+  //       icon: <Icon.FileText size={12} />,
+  //       permissions: ["admin", "editor"],
+  //       navLink: "/app/horoscopes/monthlyhoroscope/monthlyHoroscopeList",
+  //     },
+
+  //     {
+  //       id: "yearlyHoroscopeList",
+  //       title: "Yearly Horoscope",
+  //       type: "item",
+  //       icon: <Icon.FileText size={12} />,
+  //       permissions: ["admin", "editor"],
+  //       navLink: "/app/horoscopes/yearlyhoroscope/yearlyHoroscopeList",
+  //     },
+
+  //     {
+  //       id: "dailyHoroscopeList",
+  //       title: "Daily Horoscope",
+  //       type: "item",
+  //       icon: <Icon.FileText size={12} />,
+  //       permissions: ["admin", "editor"],
+  //       navLink: "/app/horoscopes/dailyhoroscope/dailyHoroscopeList",
+  //     },
+
+  //     {
+  //       id: "tomorrowHoroscopeList",
+  //       title: "Tomorrow Horoscope",
+  //       type: "item",
+  //       icon: <Icon.FileText size={12} />,
+  //       permissions: ["admin", "editor"],
+  //       navLink: "/app/horoscopes/tomorrowhoroscope/tomorrowHoroscopeList",
+  //     },
+
+  //     {
+  //       id: "yesterdayHoroscopeList",
+  //       title: "Yesterday Horoscope",
+  //       type: "item",
+  //       icon: <Icon.FileText size={12} />,
+  //       permissions: ["admin", "editor"],
+  //       navLink: "/app/horoscopes/yesterdayhoroscope/yesterdayHoroscopeList",
+  //     },
+
+  //     // {
+  //     //   id: "YearlyHoroscopeList",
+  //     //   title: "Yearly Horoscope",
+  //     //   type: "item",
+  //     //   icon: <Icon.FileText size={20} />,
+  //     //   permissions: ["admin", "editor"],
+  //     //   navLink: "/app/horoscopes/yearlyhoroscope/YearlyHoroscopeList",
+  //     // },
+  //   ],
+  // },
   {
-    id: "rashisoroscopelist",
-    title: "Rashi Horoscope ",
+    id: "horoscopesList",
+    title: "Horoscopes List",
     type: "item",
-    icon: <Icon.Table size={20} />,
+    icon: <Icon.Box size={20} />,
     permissions: ["admin", "editor"],
-    navLink: "/app/rashihoroscope/rashihoroscopelist",
+    navLink: "/app/horoscopes/horoscopesList",
   },
 
   {
-    id: "rashilist",
-    title: "Rashi",
-    type: "item",
-    icon: <Icon.Table size={20} />,
-    permissions: ["admin", "editor"],
-    navLink: "/app/categoryhoroscope/rashilist",
-  },
-
-  {
-    id: "horoscopecategory",
+    id: "horoscopeCategoryList",
     title: "Horoscope Category",
     type: "item",
-    icon: <Icon.FileText size={20} />,
+    icon: <Icon.Box size={20} />,
     permissions: ["admin", "editor"],
-    navLink: "/app/horoscope/horoscopecategory",
+    navLink: "/app/horoscopecategory/horoscopeCategoryList",
   },
-
   {
-    id: "horoscope",
-    title: "Horoscope",
-    type: "item",
-    icon: <Icon.FileText size={20} />,
-    permissions: ["admin", "editor"],
-    navLink: "/app/categoryhoroscope/catehoroscopelist",
+    id: "rashimanagement",
+    title: "Rashi Management",
+    type: "collapse",
+    icon: <Icon.BarChart2 size={20} />,
+    children: [
+      {
+        id: "rashi",
+        title: "Rashi List",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/rashimanagement/rashi/rashiList",
+      },
+      {
+        id: "rashiHoroscopeList",
+        title: "Rashi Horoscope List",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/rashimanagement/rashihoroscope/rashiHoroscopeList",
+      },
+    ],
   },
-
-  {
-    id: "rashiHoroscope",
-    title: "Rashi Horoscope List ",
-    type: "item",
-    icon: <Icon.Table size={20} />,
-    permissions: ["admin", "editor"],
-    navLink: "/app/rashihoro/rashiHoroscope",
-  },
-
   {
     type: "groupHeader",
     groupTitle: "Porduct Management",
@@ -125,20 +208,20 @@ const navigationConfig = [
     icon: <Icon.Box size={20} />,
     children: [
       {
-        id: "categorylist",
+        id: "categoryList",
         title: "Category List",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/productmanager/categorylist",
+        navLink: "/app/productmanager/category/categoryList",
       },
       {
-        id: "productlist",
+        id: "productList",
         title: "Product List",
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/productmanager/productlist",
+        navLink: "/app/productmanager/product/productList",
       },
       {
         id: "astrologerproducts",

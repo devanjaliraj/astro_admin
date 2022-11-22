@@ -104,9 +104,17 @@ const PackageList = lazy(() => import("./views/apps/poojapackage/PackageList"));
 
 // productManager
 const ProductList = lazy(() =>
-  import("./views/apps/productmanager/ProductList")
+  import("./views/apps/productmanager/product/ProductList")
 );
-
+const AddProduct = lazy(() =>
+  import("./views/apps/productmanager/product/AddProduct")
+);
+const EditProduct = lazy(() =>
+  import("./views/apps/productmanager/product/EditProduct")
+);
+const ViewProduct = lazy(() =>
+  import("./views/apps/productmanager/product/ViewProduct")
+);
 // kundli management
 const KundliMatchList = lazy(() =>
   import("./views/apps/kundlimanage/KundliMatchList")
@@ -115,38 +123,54 @@ const KundliUserDetail = lazy(() =>
   import("./views/apps/kundlimanage/KundliUserDetail")
 );
 
-// horoscope
-const HoroscopeCategory = lazy(() =>
-  import("./views/apps/horoscope/HoroscopeCategory")
+// Start Horoscope Category
+const HoroscopeCategoryList = lazy(() =>
+  import("./views/apps/horoscopecategory/HoroscopeCategoryList")
 );
-const AddHoroscope = lazy(() => import("./views/apps/horoscope/AddHoroscope"));
+const AddHoroscopeCategory = lazy(() =>
+  import("./views/apps/horoscopecategory/AddHoroscopeCategory")
+);
+const EditHoroscopeCategory = lazy(() =>
+  import("./views/apps/horoscopecategory/EditHoroscopeCategory")
+);
+const ViewHoroscopeCategory = lazy(() =>
+  import("./views/apps/horoscopecategory/ViewHoroscopeCategory")
+);
+// End Horoscope Category
 
-const HoroscopeEdit = lazy(() =>
-  import("./views/apps/horoscope/HoroscopeEdit")
+// Start Horoscopes
+const HoroscopesList = lazy(() =>
+  import("./views/apps/horoscopes/HoroscopesList")
 );
+const AddHoroscopes = lazy(() =>
+  import("./views/apps/horoscopes/AddHoroscopes")
+);
+const EditHoroscopes = lazy(() =>
+  import("./views/apps/horoscopes/EditHoroscope")
+);
+const ViewHoroscopes = lazy(() =>
+  import("./views/apps/horoscopes/ViewHoroscopes")
+);
+// End Horoscopes
 
 const UserChatList = lazy(() => import("./views/apps/chat/UserChatList"));
 
 const AstrologerProduct = lazy(() =>
   import("./views/apps/productmanager/AstrologerProduct")
 );
-const AddProduct = lazy(() => import("./views/apps/productmanager/AddProduct"));
-const EditProduct = lazy(() =>
-  import("./views/apps/productmanager/EditProduct")
-);
-const ViewProduct = lazy(() =>
-  import("./views/apps/productmanager/ViewProduct")
-);
+
 const CategoryList = lazy(() =>
-  import("./views/apps/productmanager/CategoryList")
+  import("./views/apps/productmanager/category/CategoryList")
 );
 const AddCategory = lazy(() =>
-  import("./views/apps/productmanager/AddCategory")
+  import("./views/apps/productmanager/category/AddCategory")
 );
 const EditCategory = lazy(() =>
-  import("./views/apps/productmanager/EditCategory")
+  import("./views/apps/productmanager/category/EditCategory")
 );
-
+const ViewCategory = lazy(() =>
+  import("./views/apps/productmanager/category/ViewCategory")
+);
 // productManager close
 const AstrologerList = lazy(() =>
   import("./views/apps/astrology/AstrologerList")
@@ -213,20 +237,6 @@ const EditTermCondition = lazy(() =>
 const FaqList = lazy(() => import("./views/apps/pagesetup/faq/FaqList"));
 const AddFaq = lazy(() => import("./views/apps/pagesetup/faq/AddFaq"));
 
-// Rashi Horoscope
-const RashiHoroscope = lazy(() =>
-  import("./views/apps/rashihoro/RashiHoroscope")
-);
-const AddRashiHoroscope = lazy(() =>
-  import("./views/apps/rashihoro/AddRashiHoroscope")
-);
-const EditRashiHoroscope = lazy(() =>
-  import("./views/apps/rashihoro/EditRashiHoroscope")
-);
-const ViewRashiHoroscope = lazy(() =>
-  import("./views/apps/rashihoro/ViewRashiHoroscope")
-);
-
 // Blog
 const BlogList = lazy(() => import("./views/apps/blogmngment/blog/BlogList"));
 const AddBlog = lazy(() => import("./views/apps/blogmngment/blog/AddBlog"));
@@ -246,40 +256,34 @@ const EditBlogCate = lazy(() =>
 const ViewBlogCate = lazy(() =>
   import("./views/apps/blogmngment/blogcategory/ViewBlogCate")
 );
+//Start Rashi Management
+
+const RashiList = lazy(() =>
+  import("./views/apps/rashimanagement/rashi/RashiList")
+);
+const AddRashi = lazy(() =>
+  import("./views/apps/rashimanagement/rashi/AddRashi")
+);
+const EditRashi = lazy(() =>
+  import("./views/apps/rashimanagement/rashi/EditRashi")
+);
+const ViewRashi = lazy(() =>
+  import("./views/apps/rashimanagement/rashi/ViewRashi")
+);
+//End Rashi Management
 
 // rashihoroscope
-const RashiHorocopeList = lazy(() =>
-  import("./views/apps/rashihoroscope/RashiHoroscopeList")
+const RashiHoroscopeList = lazy(() =>
+  import("./views/apps/rashimanagement/rashihoroscope/RashiHoroscopeList")
 );
-const AddRashiHoro = lazy(() =>
-  import("./views/apps/rashihoroscope/AddRashiHoro")
+const AddRashiHoroscope = lazy(() =>
+  import("./views/apps/rashimanagement/rashihoroscope/AddRashiHoroscope")
 );
-const EditRashiHoro = lazy(() =>
-  import("./views/apps/rashihoroscope/EditRashiHoro")
+const EditRashiHoroscope = lazy(() =>
+  import("./views/apps/rashimanagement/rashihoroscope/EditRashiHoroscope")
 );
-const ViewRashiHoro = lazy(() =>
-  import("./views/apps/rashihoroscope/ViewRashiHoro")
-);
-
-// Categoryhoroscope
-const CateHoroscopeList = lazy(() =>
-  import("./views/apps/categoryhoroscope/CateHoroscopeList")
-);
-const AddCateHoro = lazy(() =>
-  import("./views/apps/categoryhoroscope/AddCateHoro")
-);
-const EditCateHoro = lazy(() =>
-  import("./views/apps/categoryhoroscope/EditCateHoro")
-);
-const ViewCateHoro = lazy(() =>
-  import("./views/apps/categoryhoroscope/VIewCateHoro")
-);
-const RashiList = lazy(() =>
-  import("./views/apps/categoryhoroscope/RashiList")
-);
-const AddRashi = lazy(() => import("./views/apps/categoryhoroscope/AddRashi"));
-const EditRashi = lazy(() =>
-  import("./views/apps/categoryhoroscope/EditRashi")
+const ViewRashiHoroscope = lazy(() =>
+  import("./views/apps/rashimanagement/rashihoroscope/ViewRashiHoroscope")
 );
 
 // setting
@@ -563,47 +567,95 @@ class AppRouter extends React.Component {
               path="/app/kundlimanage/kundliuserdetail"
               component={KundliUserDetail}
             />
-            {/* horoscope */}
+            {/* Start Horoscopes  */}
             <AppRoute
-              path="/app/horoscope/horoscopecategory"
-              component={HoroscopeCategory}
+              path="/app/horoscopes/horoscopesList"
+              component={HoroscopesList}
             />
             <AppRoute
-              path="/app/horoscope/addhoroscope"
-              component={AddHoroscope}
+              path="/app/horoscopes/addHoroscopes"
+              component={AddHoroscopes}
             />
             <AppRoute
-              path="/app/horoscope/horoscopeedit/:id"
-              component={HoroscopeEdit}
+              path="/app/horoscopes/editHoroscopes/:id"
+              component={EditHoroscopes}
             />
             <AppRoute
-              path="/app/productmanager/astrologerproduct"
+              path="/app/horoscopes/viewHoroscopes/:id"
+              component={ViewHoroscopes}
+            />
+            {/* Start Horoscopes*/}
+            <AppRoute
+              path="/app/horoscopecategory/horoscopeCategoryList"
+              component={HoroscopeCategoryList}
+            />
+            <AppRoute
+              path="/app/horoscopecategory/addHoroscopeCategory"
+              component={AddHoroscopeCategory}
+            />
+            <AppRoute
+              path="/app/horoscopecategory/editHoroscopeCategory/:id"
+              component={EditHoroscopeCategory}
+            />
+            <AppRoute
+              path="/app/horoscopecategory/viewHoroscopeCategory/:id"
+              component={ViewHoroscopeCategory}
+            />
+            {/*End Horoscope */}
+            {/* Start Rashi */}
+            <AppRoute
+              path="/app/rashimanagement/rashi/rashiList"
+              component={RashiList}
+            />
+            <AppRoute
+              path="/app/rashimanagement/rashi/addRashi"
+              component={AddRashi}
+            />
+            <AppRoute
+              path="/app/rashimanagement/rashi/editRashi/:id"
+              component={EditRashi}
+            />
+            <AppRoute
+              path="/app/rashimanagement/rashi/viewRashi/:id"
+              component={ViewRashi}
+            />
+            {/* End Rashi */}
+            {/* Start product manager */}
+            <AppRoute
+              path="/app/productmanager/astrologerProduct"
               component={AstrologerProduct}
             />
-            <AppRoute path="/app/chat/userchatlist" component={UserChatList} />
             <AppRoute
-              path="/app/productmanager/addproduct"
+              path="/app/productmanager/product/productList"
+              component={ProductList}
+            />
+            <AppRoute
+              path="/app/productmanager/product/addProduct"
               component={AddProduct}
             />
             <AppRoute
-              path="/app/productmanager/editproduct"
+              path="/app/productmanager/product/editProduct/:id"
               component={EditProduct}
             />
             <AppRoute
-              path="/app/productmanager/viewproduct"
+              path="/app/productmanager/product/viewProduct/:id"
               component={ViewProduct}
             />
             <AppRoute
-              path="/app/productmanager/categorylist"
+              path="/app/productmanager/category/categoryList"
               component={CategoryList}
             />
             <AppRoute
-              path="/app/productmanager/addcategory"
+              path="/app/productmanager/category/addCategory"
               component={AddCategory}
             />
             <AppRoute
-              path="/app/productmanager/editcategory"
+              path="/app/productmanager/category/editCategory/:id"
               component={EditCategory}
+            />
+            <AppRoute
+              path="/app/productmanager/category/viewCategory/:id"
+              component={ViewCategory}
             />
             {/* productmanager close  */}
             <AppRoute
@@ -805,23 +857,6 @@ class AppRouter extends React.Component {
             />
             <AppRoute path="/app/pagesetup/faq/faqList" component={FaqList} />
             <AppRoute path="/app/pagesetup/faq/addFaq" component={AddFaq} />
-            {/* Rashi Horoscope */}
-            <AppRoute
-              path="/app/rashihoro/rashiHoroscope"
-              component={RashiHoroscope}
-            />
-            <AppRoute
-              path="/app/rashihoro/addRashiHoroscope"
-              component={AddRashiHoroscope}
-            />
-            <AppRoute
-              path="/app/rashihoro/editRashiHoroscope/:id"
-              component={EditRashiHoroscope}
-            />
-            <AppRoute
-              path="/app/rashihoro/viewRashiHoroscope"
-              component={ViewRashiHoroscope}
-            />
             {/* blog */}
             <AppRoute
               path="/app/blogmngment/blog/blogList"
@@ -858,49 +893,20 @@ class AppRouter extends React.Component {
             />
             {/* rashihoroscope  */}
             <AppRoute
-              path="/app/rashihoroscope/rashihoroscopelist"
-              component={RashiHorocopeList}
+              path="/app/rashimanagement/rashihoroscope/rashiHoroscopeList"
+              component={RashiHoroscopeList}
             />
             <AppRoute
-              path="/app/rashihoroscope/addrashihoro"
-              component={AddRashiHoro}
+              path="/app/rashimanagement/rashihoroscope/addRashiHoroscope"
+              component={AddRashiHoroscope}
             />
             <AppRoute
-              path="/app/rashihoroscope/editrashihoro"
-              component={EditRashiHoro}
+              path="/app/rashimanagement/rashihoroscope/editRashiHoroscope/:id"
+              component={EditRashiHoroscope}
             />
             <AppRoute
-              path="/app/rashihoroscope/viewrashihoro"
-              component={ViewRashiHoro}
-            />
-            {/* CAtegory Horoscope  */}
-            <AppRoute
-              path="/app/categoryhoroscope/catehoroscopelist"
-              component={CateHoroscopeList}
-            />
-            <AppRoute
-              path="/app/categoryhoroscope/addcatehoro"
-              component={AddCateHoro}
-            />
-            <AppRoute
-              path="/app/categoryhoroscope/editcatehoro"
-              component={EditCateHoro}
-            />
-            <AppRoute
-              path="/app/categoryhoroscope/viewcatehoro"
-              component={ViewCateHoro}
-            />
-            <AppRoute
-              path="/app/categoryhoroscope/rashilist"
-              component={RashiList}
-            />
-            <AppRoute
-              path="/app/categoryhoroscope/addrashi"
-              component={AddRashi}
-            />
-            <AppRoute
-              path="/app/categoryhoroscope/editrashi/:id"
-              component={EditRashi}
+              path="/app/rashimanagement/rashihoroscope/viewRashiHoroscope/:id"
+              component={ViewRashiHoroscope}
             />
             {/* report */}
             <AppRoute

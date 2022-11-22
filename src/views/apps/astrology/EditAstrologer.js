@@ -14,7 +14,7 @@ import {
 import axiosConfig from "../../../axiosConfig";
 // import { history } from "../../../history";
 // import { data } from "jquery";
-// import swal from "sweetalert";
+import swal from "sweetalert";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
@@ -25,6 +25,9 @@ export default class EditAstrologer extends Component {
       approvedstatus: "",
     };
   }
+  changeHandler1 = (e) => {
+    this.setState({ approvedstatus: e.target.value });
+  };
   // componentDidMount() {
   //   let { id } = this.props.match.params;
   //   axiosConfig
@@ -52,7 +55,7 @@ export default class EditAstrologer extends Component {
       .post(`/admin/updteApprovedsts/${id}`, this.state)
       .then((response) => {
         console.log(response);
-        // swal("Success!", "Submitted SuccessFull!", "success");
+        swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push(`/app/astrology/astrologerList`);
       })
       .catch((error) => {

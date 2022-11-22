@@ -10,10 +10,17 @@ import {
   Button,
   CustomInput,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
+import axiosConfig from "../../../../axiosConfig";
 import "react-toastify/dist/ReactToastify.css";
 import { Route } from "react-router-dom";
-import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import Breadcrumbs from "../../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { EditorState, convertToRaw } from "draft-js";
+import "../../../../assets/scss/plugins/extensions/editor.scss";
+import draftToHtml from "draftjs-to-html";
+// import { data } from "jquery";
+// import swal from "sweetalert";
 
 export class AddCategory extends Component {
   state = {
@@ -22,8 +29,34 @@ export class AddCategory extends Component {
     img: "",
     desc: "",
     status: "",
+    editorState: EditorState.createEmpty(),
     selectedFile: undefined,
     selectedName: "",
+  };
+  uploadImageCallBack = (file) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.imgur.com/3/image");
+      xhr.setRequestHeader("Authorization", "Client-ID 7e1c3e366d22aa3");
+      const data = new FormData();
+      data.append("image", file);
+      xhr.send(data);
+      xhr.addEventListener("load", () => {
+        const response = JSON.parse(xhr.responseText);
+        resolve(response);
+      });
+      xhr.addEventListener("error", () => {
+        const error = JSON.parse(xhr.responseText);
+        reject(error);
+      });
+    });
+  };
+
+  onEditorStateChange = (editorState) => {
+    this.setState({
+      editorState,
+      desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+    });
   };
 
   onChangeHandler = (event) => {
@@ -69,7 +102,7 @@ export class AddCategory extends Component {
       .post(`/admin/addProductcategory`, data)
       .then((response) => {
         console.log(response);
-        this.props.history.push("/app/productmanager/categorylist");
+        this.props.history.push("/app/productmanager/category/categoryList");
       })
       .catch((error) => {
         console.log(error);
@@ -96,7 +129,7 @@ export class AddCategory extends Component {
                   <Button
                     className=" btn btn-danger float-right"
                     onClick={() =>
-                      history.push("/app/productmanager/categorylist")
+                      history.push("/app/productmanager/category/categoryList")
                     }
                   >
                     Back
@@ -119,17 +152,7 @@ export class AddCategory extends Component {
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
-                <Col lg="4" md="4" sm="4" className="mb-2">
-                  <Label>Description</Label>
-                  <Input
-                    required
-                    type="text"
-                    name="desc"
-                    placeholder="slug  Name"
-                    value={this.state.desc}
-                    onChange={this.changeHandler}
-                  ></Input>
-                </Col>
+
                 <Col lg="4" md="4" sm="4" className="mb-2">
                   <Label>Thumnail image</Label>
 
@@ -138,6 +161,29 @@ export class AddCategory extends Component {
                     type="file"
                     multiple
                     onChange={this.onChangeHandler}
+                  />
+                </Col>
+                <Col lg="12" md="12" sm="12" className="mb-2">
+                  <Label> Description</Label>
+
+                  <br />
+
+                  <Editor
+                    wrapperClassName="demo-wrapper"
+                    editorClassName="demo-editor"
+                    onEditorStateChange={this.onEditorStateChange}
+                    toolbar={{
+                      inline: { inDropdown: true },
+                      list: { inDropdown: true },
+                      textAlign: { inDropdown: true },
+                      link: { inDropdown: true },
+                      history: { inDropdown: true },
+                      image: {
+                        uploadCallback: this.uploadImageCallBack,
+                        previewImage: true,
+                        alt: { present: true, mandatory: true },
+                      },
+                    }}
                   />
                 </Col>
               </Row>

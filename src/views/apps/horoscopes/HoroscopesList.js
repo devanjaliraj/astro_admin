@@ -5,6 +5,7 @@ import {
   Input,
   Row,
   Col,
+  CustomInput,
   Button,
   UncontrolledDropdown,
   DropdownMenu,
@@ -12,7 +13,7 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
-import axios from "axios";
+import ReactHtmlParser from "react-html-parser";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
@@ -22,7 +23,7 @@ import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-class CategoryList extends React.Component {
+class HoroscopesList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -39,7 +40,7 @@ class CategoryList extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 100,
+        width: 90,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
@@ -48,135 +49,191 @@ class CategoryList extends React.Component {
 
       {
         headerName: "Title",
-        field: "name",
+        field: "title",
         filter: true,
-        width: 150,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.name}</span>
+              <span>{params.data.title}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Image",
-        field: "img",
-        filter: false,
-        width: 200,
-        setColumnVisible: false,
+        headerName: "Category Description",
+        field: "desc",
+        filter: true,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.img.map((i) => (
-                <img
-                  className=" rounded-circle  mr-3"
-                  src={i}
-                  alt="user avatar"
-                  height="40"
-                  width="40"
-                />
+              <span>{params.data.category?.desc}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Rashi Title",
+        field: "rashi_title",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.rashiId?.map((rashi) => (
+                <span key={rashi._id}>{rashi?.rashi_title}</span>
+              ))}
+              {/* <span>{params.data.rashiId?.rashi_title}</span> */}
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Rashi Description",
+        field: "desc",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              {params.data.rashiId?.map((rashi) => (
+                <span key={rashi._id}>{rashi?.desc}</span>
+              ))}
+              {/* <span>{params.data.rashiId?.desc}</span> */}
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Short Description",
+        field: "sort_desc",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{ReactHtmlParser(params.data.sort_desc)}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Long Description",
+        field: "long_desc",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{ReactHtmlParser(params.data.long_desc)}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Date",
+        field: "date",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              {/* <span>{params.data.rashiId?.date}</span> */}
+              {params.data.rashiId?.map((rashi) => (
+                <span key={rashi._id}>{rashi?.date}</span>
               ))}
             </div>
           );
         },
       },
 
-      {
-        headerName: "Description",
-        field: "desc",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.desc}</span>
-            </div>
-          );
-        },
-      },
+      // {
+      //   headerName: "Status",
+      //   field: "status",
+      //   filter: true,
+      //   width: 120,
+      //   cellRendererFramework: (params) => {
+      //     return params.value === "Active" ? (
+      //       <div className="badge badge-pill badge-success">
+      //         {params.data.status}
+      //       </div>
+      //     ) : params.value === "Deactive" ? (
+      //       <div className="badge badge-pill badge-warning">
+      //         {params.data.status}
+      //       </div>
+      //     ) : null;
+      //   },
+      // },
 
-      {
-        headerName: "Status",
-        field: "status",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return params.value === "Active" ? (
-            <div className="badge badge-pill badge-success">
-              {params.data.status}
-            </div>
-          ) : params.value === "Deactive" ? (
-            <div className="badge badge-pill badge-warning">
-              {params.data.status}
-            </div>
-          ) : null;
-        },
-      },
-
-      {
-        headerName: "Action",
-        field: "sortorder",
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="actions cursor-pointer">
-              <Route
-                render={({ history }) => (
-                  <Eye
-                    className="mr-50"
-                    size="25px"
-                    color="green"
-                    onClick={() =>
-                      history.push(
-                        `/app/userride/viewUserRide/${params.data._id}`
-                      )
-                    }
-                  />
-                )}
-              />
-              <Route
-                render={({ history }) => (
-                  <Edit
-                    className="mr-50"
-                    size="25px"
-                    color="blue"
-                    onClick={() =>
-                      history.push("/app/productmanager/editcategory")
-                    }
-                  />
-                )}
-              />
-              <Trash2
-                className="mr-50"
-                size="25px"
-                color="red"
-                onClick={() => {
-                  let selectedData = this.gridApi.getSelectedRows();
-                  this.runthisfunction(params.data._id);
-                  this.gridApi.updateRowData({ remove: selectedData });
-                }}
-              />
-            </div>
-          );
-        },
-      },
+      // {
+      //   headerName: "Action",
+      //   field: "sortorder",
+      //   width: 120,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div className="actions cursor-pointer">
+      //          <Route
+      //           render={({ history }) => (
+      //             <Eye
+      //               className="mr-50"
+      //               size="25px"
+      //               color="green"
+      //               onClick={() =>
+      //                 history.push(
+      //                   `/app/horoscopes/viewHoroscopes/${params.data._id}`
+      //                 )
+      //               }
+      //             />
+      //           )}
+      //         />
+      //         <Route
+      //           render={({ history }) => (
+      //             <Edit
+      //               className="mr-50"
+      //               size="25px"
+      //               color="blue"
+      //               onClick={() =>
+      //                 history.push(
+      //                   `/app/horoscopes/editHoroscopes/${params.data._id}`
+      //                 )
+      //               }
+      //             />
+      //           )}
+      //         />
+      //         <Trash2
+      //           className="mr-50"
+      //           size="25px"
+      //           color="red"
+      //           onClick={() => {
+      //             let selectedData = this.gridApi.getSelectedRows();
+      //             this.runthisfunction(params.data._id);
+      //             this.gridApi.updateRowData({ remove: selectedData });
+      //           }}
+      //         />
+      //       </div>
+      //     );
+      //   },
+      // },
     ],
   };
   async componentDidMount() {
-    // let { id } = this.props.match.params;
+    let { id } = this.props.match.params;
 
-    await axiosConfig.get(`/admin/getproductcalegory`).then((response) => {
-      let rowData = response.data.data;
-      console.log(rowData);
-      this.setState({ rowData });
-    });
+    await axiosConfig
+      .get(`/admin/rashi_by_category/63747d27be3fdda1e80b5a31`)
+      .then((response) => {
+        let rowData = response.data.data;
+        console.log(rowData);
+        this.setState({ rowData });
+      });
   }
 
   // async runthisfunction(id) {
   //   console.log(id);
-  //   await axiosConfig.get(`/admin/dltCategory/${id}`).then(
+  //   await axiosConfig.get(`/admin/delproduct/${id}`).then(
   //     (response) => {
   //       console.log(response);
   //     },
@@ -213,9 +270,9 @@ class CategoryList extends React.Component {
       (
         <div>
           <Breadcrumbs
-            breadCrumbTitle="All Category"
-            breadCrumbParent="Product Management"
-            breadCrumbActive="All Category"
+            breadCrumbTitle="All Horoscopes"
+            breadCrumbParent="Horoscopes"
+            breadCrumbActive="Horoscopes List"
           />
 
           <Row className="app-user-list">
@@ -225,23 +282,25 @@ class CategoryList extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                      All Category
+                      All Horoscopes List
                     </h1>
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <Route
                       render={({ history }) => (
                         <Button
                           className=" btn btn-success float-right"
                           onClick={() =>
-                            history.push("/app/productmanager/addCategory")
+                            history.push(
+                              "/app/Horoscopes/addHoroscopes"
+                            )
                           }
                         >
                           Add
                         </Button>
                       )}
                     />
-                  </Col>
+                  </Col> */}
                 </Row>
                 <CardBody>
                   {this.state.rowData === null ? null : (
@@ -343,4 +402,4 @@ class CategoryList extends React.Component {
     );
   }
 }
-export default CategoryList;
+export default HoroscopesList;

@@ -12,16 +12,16 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
+import axios from "axios";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
-import { Trash2, ChevronDown } from "react-feather";
+import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-import SwitchEvent from "../../forms/form-elements/switch/SwitchEvent";
-
-class UserList extends React.Component {
+import ReactHtmlParser from "react-html-parser";
+class HoroscopeCategoryList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -44,140 +44,69 @@ class UserList extends React.Component {
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
+
       {
-        headerName: "Image",
-        field: "userimg",
-        filter: false,
-        width: 100,
-        setColumnVisible: false,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              {params.data.userimg.map((i) => (
-                <img
-                  className=" rounded-circle  mr-3"
-                  src={i}
-                  alt="user avatar"
-                  height="40"
-                  width="40"
-                />
-              ))}
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Full Name",
-        field: "fullname",
+        headerName: "Title",
+        field: "title",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.fullname}</span>
+              <span>{params.data.title}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Email",
-        field: "email	",
+        headerName: "Descriptions",
+        field: "desc",
         filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Mobile No.",
-        field: "mobile",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.mobile}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "DOB",
-        field: "dob	",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Date of Register",
-        field: "dateofregister",
-        filter: true,
-        width: 150,
+        width: 550,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.createdAt}</span>
+              <span>{ReactHtmlParser(params.data.desc)}</span>
             </div>
           );
         },
       },
-
-      // {
-      //   headerName: "Status",
-      //   field: "dateofregister",
-      //   filter: true,
-      //   width: 150,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div>
-      //         <span>{params.data.status}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-
       {
-        headerName: "Actions",
+        headerName: "Action",
         field: "sortorder",
-        width: 150,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Route
+              <Route
                 render={({ history }) => (
                   <Eye
                     className="mr-50"
                     size="25px"
                     color="green"
                     onClick={() =>
-                      history.push(`/app/user/viewUser/${params.data._id}`)
+                      history.push(
+                        `/app/horoscopecategory/viewHoroscopeCategory/${params.data._id}`
+                      )
                     }
                   />
                 )}
-              /> */}
-              {/* <Route
+              />
+              <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
                     size="25px"
                     color="blue"
                     onClick={() =>
-                      history.push(`/app/user/editUser/${params.data._id}`)
+                      history.push(
+                        `/app/horoscopecategory/editHoroscopeCategory/${params.data._id}`
+                      )
                     }
                   />
                 )}
-              /> */}
+              />
               <Trash2
                 className="mr-50"
                 size="25px"
@@ -195,7 +124,7 @@ class UserList extends React.Component {
     ],
   };
   async componentDidMount() {
-    await axiosConfig.get(`/admin/alluser`).then((response) => {
+    await axiosConfig.get("/admin/getallCategory").then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
@@ -204,7 +133,7 @@ class UserList extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/admin/dltuser/${id}`).then(
+    await axios.get(`/admin/dltCategory/${id}`).then(
       (response) => {
         console.log(response);
       },
@@ -241,9 +170,9 @@ class UserList extends React.Component {
       (
         <div>
           <Breadcrumbs
-            breadCrumbTitle="User"
+            breadCrumbTitle="Horoscope Category"
             breadCrumbParent="Home"
-            breadCrumbActive=" Users List"
+            breadCrumbActive=" Horoscope Category List"
           />
 
           <Row className="app-user-list">
@@ -253,21 +182,25 @@ class UserList extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                      Users List
+                      Horoscope Category List
                     </h1>
                   </Col>
-                  {/* <Col>
+                  <Col>
                     <Route
                       render={({ history }) => (
                         <Button
                           className=" btn btn-success float-right"
-                          onClick={() => history.push("/app/user/addUser")}
+                          onClick={() =>
+                            history.push(
+                              "/app/horoscopecategory/addHoroscopeCategory"
+                            )
+                          }
                         >
-                          Add User
+                          Add Horoscope Category
                         </Button>
                       )}
                     />
-                  </Col> */}
+                  </Col>
                 </Row>
                 <CardBody>
                   {this.state.rowData === null ? null : (
@@ -369,4 +302,4 @@ class UserList extends React.Component {
     );
   }
 }
-export default UserList;
+export default HoroscopeCategoryList;

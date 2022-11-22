@@ -5,23 +5,25 @@ import {
   Input,
   Row,
   Col,
+  CustomInput,
   Button,
   UncontrolledDropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
-import { ContextLayout } from "../../../utility/context/Layout";
+import axiosConfig from "../../../../axiosConfig";
+import ReactHtmlParser from "react-html-parser";
+import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
-import { Trash2, ChevronDown } from "react-feather";
-import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../assets/scss/pages/users.scss";
+import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
+//import classnames from "classnames";
+import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
-import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-import SwitchEvent from "../../forms/form-elements/switch/SwitchEvent";
+import Breadcrumbs from "../../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-class UserList extends React.Component {
+class ProductList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -44,16 +46,31 @@ class UserList extends React.Component {
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
+
+      {
+        headerName: "Product Name",
+        field: "productname",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.productname}</span>
+            </div>
+          );
+        },
+      },
+
       {
         headerName: "Image",
-        field: "userimg",
+        field: "image",
         filter: false,
-        width: 100,
+        width: 120,
         setColumnVisible: false,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.userimg.map((i) => (
+              {params.data.image.map((i) => (
                 <img
                   className=" rounded-circle  mr-3"
                   src={i}
@@ -66,118 +83,113 @@ class UserList extends React.Component {
           );
         },
       },
+
       {
-        headerName: "Full Name",
-        field: "fullname",
+        headerName: "Category Name",
+        field: "name",
         filter: true,
-        width: 150,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.category?.name}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Selling Price",
+        field: "price",
+        filter: true,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.fullname}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Email",
-        field: "email	",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
+              <span>{params.data.price}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Mobile No.",
-        field: "mobile",
+        headerName: "Description",
+        field: "desc",
         filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.mobile}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "DOB",
-        field: "dob	",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Date of Register",
-        field: "dateofregister",
-        filter: true,
-        width: 150,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.createdAt}</span>
+              <span>{ReactHtmlParser(params.data.desc)}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Limit",
+        field: "limit",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.limit}</span>
             </div>
           );
         },
       },
 
-      // {
-      //   headerName: "Status",
-      //   field: "dateofregister",
-      //   filter: true,
-      //   width: 150,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div>
-      //         <span>{params.data.status}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
+      {
+        headerName: "Status",
+        field: "status",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return params.value === "Active" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
+            </div>
+          ) : params.value === "Deactive" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
+          ) : null;
+        },
+      },
 
       {
-        headerName: "Actions",
+        headerName: "Action",
         field: "sortorder",
-        width: 150,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Route
+              <Route
                 render={({ history }) => (
                   <Eye
                     className="mr-50"
                     size="25px"
                     color="green"
                     onClick={() =>
-                      history.push(`/app/user/viewUser/${params.data._id}`)
+                      history.push(
+                        `/app/productmanager/product/viewProduct/${params.data._id}`
+                      )
                     }
                   />
                 )}
-              /> */}
-              {/* <Route
+              />
+              <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
                     size="25px"
                     color="blue"
                     onClick={() =>
-                      history.push(`/app/user/editUser/${params.data._id}`)
+                      history.push(
+                        `/app/productmanager/product/editProduct/${params.data._id}`
+                      )
                     }
                   />
                 )}
-              /> */}
+              />
               <Trash2
                 className="mr-50"
                 size="25px"
@@ -195,7 +207,9 @@ class UserList extends React.Component {
     ],
   };
   async componentDidMount() {
-    await axiosConfig.get(`/admin/alluser`).then((response) => {
+    // let { id } = this.props.match.params;
+
+    await axiosConfig.get(`/admin/getProduct`).then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
@@ -204,7 +218,7 @@ class UserList extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/admin/dltuser/${id}`).then(
+    await axiosConfig.get(`/admin/delproduct/${id}`).then(
       (response) => {
         console.log(response);
       },
@@ -241,9 +255,9 @@ class UserList extends React.Component {
       (
         <div>
           <Breadcrumbs
-            breadCrumbTitle="User"
-            breadCrumbParent="Home"
-            breadCrumbActive=" Users List"
+            breadCrumbTitle="All Product"
+            breadCrumbParent="Product Management"
+            breadCrumbActive="All Product"
           />
 
           <Row className="app-user-list">
@@ -253,21 +267,25 @@ class UserList extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                      Users List
+                      All Product
                     </h1>
                   </Col>
-                  {/* <Col>
+                  <Col>
                     <Route
                       render={({ history }) => (
                         <Button
                           className=" btn btn-success float-right"
-                          onClick={() => history.push("/app/user/addUser")}
+                          onClick={() =>
+                            history.push(
+                              "/app/productmanager/product/addProduct"
+                            )
+                          }
                         >
-                          Add User
+                          Add
                         </Button>
                       )}
                     />
-                  </Col> */}
+                  </Col>
                 </Row>
                 <CardBody>
                   {this.state.rowData === null ? null : (
@@ -369,4 +387,4 @@ class UserList extends React.Component {
     );
   }
 }
-export default UserList;
+export default ProductList;

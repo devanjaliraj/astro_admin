@@ -5,25 +5,23 @@ import {
   Input,
   Row,
   Col,
-  CustomInput,
   Button,
   UncontrolledDropdown,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-import axiosConfig from "../../../axiosConfig";
+import axiosConfig from "../../../../axiosConfig";
 import axios from "axios";
-import { ContextLayout } from "../../../utility/context/Layout";
+import { ContextLayout } from "../../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
-//import classnames from "classnames";
-import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../assets/scss/pages/users.scss";
+import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
-import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
-
-class ProductList extends React.Component {
+import Breadcrumbs from "../../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import ReactHtmlParser from "react-html-parser";
+class RashiList extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -48,105 +46,62 @@ class ProductList extends React.Component {
       },
 
       {
-        headerName: "Product Name",
-        field: "productname",
+        headerName: "Title",
+        field: "rashi_title",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.productname}</span>
+              <span>{params.data.rashi_title}</span>
             </div>
           );
         },
       },
-
       {
-        headerName: "Image",
-        field: "image",
-        filter: false,
-        width: 200,
-        setColumnVisible: false,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              {params.data.image.map((i) => (
-                <img
-                  className=" rounded-circle  mr-3"
-                  src={i}
-                  alt="user avatar"
-                  height="40"
-                  width="40"
-                />
-              ))}
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Category Name",
-        field: "name",
+        headerName: "Category",
+        field: "category",
         filter: true,
         width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.category?.name}</span>
+              <span>{params.data.category?.title}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "date",
+        field: "date",
+        filter: true,
+        width: 100,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data.date}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Selling Price",
-        field: "price",
+        headerName: "Descriptions",
+        field: "desc",
         filter: true,
-        width: 200,
+        width: 250,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.price}</span>
+              <span>{ReactHtmlParser(params.data.desc)}</span>
             </div>
           );
         },
       },
-
-      {
-        headerName: "Limit",
-        field: "limit",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.limit}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Status",
-        field: "status",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return params.value === "Active" ? (
-            <div className="badge badge-pill badge-success">
-              {params.data.status}
-            </div>
-          ) : params.value === "Deactive" ? (
-            <div className="badge badge-pill badge-warning">
-              {params.data.status}
-            </div>
-          ) : null;
-        },
-      },
-
       {
         headerName: "Action",
         field: "sortorder",
-        width: 200,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -158,7 +113,7 @@ class ProductList extends React.Component {
                     color="green"
                     onClick={() =>
                       history.push(
-                        `/app/userride/viewUserRide/${params.data._id}`
+                        `/app/rashimanagement/rashi/viewRashi/${params.data._id}`
                       )
                     }
                   />
@@ -171,7 +126,9 @@ class ProductList extends React.Component {
                     size="25px"
                     color="blue"
                     onClick={() =>
-                      history.push("/app/productmanager/editproduct")
+                      history.push(
+                        `/app/rashimanagement/rashi/editRashi/${params.data._id}`
+                      )
                     }
                   />
                 )}
@@ -193,26 +150,24 @@ class ProductList extends React.Component {
     ],
   };
   async componentDidMount() {
-    // let { id } = this.props.match.params;
-
-    await axiosConfig.get(`/admin/getProduct`).then((response) => {
+    await axiosConfig.get("/admin/Rashilist").then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
     });
   }
 
-  async runthisfunction(id) {
-    console.log(id);
-    await axiosConfig.get(`/admin/delproduct/${id}`).then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+  // async runthisfunction(id) {
+  //   console.log(id);
+  //   await axiosConfig.get(`/admin/dlt_Rhscope/${id}`).then(
+  //     (response) => {
+  //       console.log(response);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -241,9 +196,9 @@ class ProductList extends React.Component {
       (
         <div>
           <Breadcrumbs
-            breadCrumbTitle="All Product"
-            breadCrumbParent="Product Management"
-            breadCrumbActive="All Product"
+            breadCrumbTitle="Rashi Management"
+            breadCrumbParent="Home"
+            breadCrumbActive=" Rashi List"
           />
 
           <Row className="app-user-list">
@@ -253,7 +208,7 @@ class ProductList extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                      All Product
+                      Rashi List
                     </h1>
                   </Col>
                   <Col>
@@ -262,10 +217,10 @@ class ProductList extends React.Component {
                         <Button
                           className=" btn btn-success float-right"
                           onClick={() =>
-                            history.push("/app/productmanager/addProduct")
+                            history.push("/app/rashimanagement/rashi/addRashi")
                           }
                         >
-                          Add
+                          Add Rashi
                         </Button>
                       )}
                     />
@@ -371,4 +326,4 @@ class ProductList extends React.Component {
     );
   }
 }
-export default ProductList;
+export default RashiList;
